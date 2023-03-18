@@ -1,0 +1,286 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.tb-r {
+  border: 1px solid red;
+}
+
+.tb-b {
+  border: 1px solid blue;
+}
+
+.tb-g {
+  border: 1px solid green;
+}
+
+.main_bg {
+  background-color: #aa00ff;
+}
+
+.sub_bg {
+  background-color: #e6783c;
+}
+.outer_bg {
+  background-color: #1a1a2a;
+}
+.inner_bg {
+  background-color: #262739;
+}
+
+.sigma {
+  .shogun_bg-primary {
+    background-color: #1a1a2a;
+  }
+
+  .shogun_bg-secondary {
+    background-color: #262739;
+  }
+}
+
+.main_c {
+  color: #aa00ff;
+}
+
+.sub_c {
+  color: #e6783c;
+}
+
+.main_fill {
+  fill: #aa00ff;
+}
+
+.error_c {
+  color: #dc4d4d;
+}
+
+.error_bg {
+  background-color: #dc4d4d;
+}
+
+.warning_c {
+  color: #34c2ff;
+}
+.warning_bg {
+  background-color: #34c2ff;
+}
+
+.main_bd {
+  border-color: #aa00ff;
+}
+
+.sub_bd {
+  border-color: #e6783c;
+}
+
+/** Web3 Onboard Custom Style */
+:root {
+  --onboard-modal-z-index: 100;
+
+  --onboard-connect-sidebar-background: #e6783c;
+  --onboard-connect-sidebar-color: #262739;
+  // --onboard-close-button-background: #0b0b22;
+  // --onboard-close-button-color: white;
+  --onboard-connect-sidebar-progress-background: #262739;
+  --onboard-connect-sidebar-progress-color: #aa00ff;
+  --onboard-main-scroll-container-background: #262739;
+  @media screen and (max-width: 767px) {
+    --onboard-main-scroll-container-background: #e6783c;
+  }
+
+  --onboard-connect-header-background: #262739;
+  --onboard-connect-header-color: #e6783c;
+
+  // Container Wallet Button
+  --onboard-wallet-button-color: "#e6783c";
+  --onboard-wallet-button-background-hover: #aa00ff;
+  --onboard-wallet-button-border-color: none;
+  // --onboard-wallet-app-icon-border-color: none;
+  --onboard-close-button-background: none;
+  --onboard-close-button-color: #aa00ff;
+
+  // Account Center
+  --account-center-z-index: 99;
+  --account-center-minimized-background: #262739;
+  --account-center-minimized-address-color: #e6783c;
+  --account-center-app-btn-background: #aa00ff;
+  --account-center-micro-background: #262739;
+  // --account-center-border: #aa00ff;
+  --account-center-maximized-upper-action-color: #aa00ff;
+  // --account-center-maximized-info-section-background-color: #aa00ff
+
+  // Colors
+  // --onboard-gray-700: #e6783c;
+}
+
+/** postcss-100vh-fix */
+.layout {
+  height: 100vh;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .layout {
+    /* The hack for Safari */
+    height: -webkit-fill-available;
+  }
+}
+
+/** Fonts */
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-Thin.ttf");
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-ExtraLight.ttf");
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-Light.ttf");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-Regular.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-Medium.ttf");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-SemiBold.ttf");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-Bold.ttf");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-ExtraBold.ttf");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets/fonts/Poppins-Black.ttf");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    font-family: Poppins;
+  }
+}
+
+/** Hide input controls */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/** Sigma Alert */
+.SigmaAlert {
+  background-color: #1a1a2a !important;
+  .swal2-html-container {
+    margin: 0;
+  }
+
+  .SA_inner {
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 23px 60px 42px 60px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .SigmaAlert {
+    .SA_inner {
+      padding: 23px 30px 40px 30px;
+    }
+  }
+}
+
+/** Sigma Alert */
+@keyframes anvil {
+  0% {
+    transform: scale(1) translateY(0px);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+  }
+  1% {
+    transform: scale(0.96) translateY(10px);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(241, 241, 241, 0);
+  }
+  100% {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+    box-shadow: 0 0 500px rgba(241, 241, 241, 0);
+  }
+}
+.popup-content {
+  -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
+}
+
+.popup-content {
+  background: #1a1a2a;
+  max-width: 95%;
+  width: 660px;
+  padding: 23px 40px 42px 40px;
+  border-radius: 8px;
+}
+@media screen and (max-width: 600px) {
+  .popup-content {
+    padding: 23px 20px 21px 20px;
+  }
+}
+
+/** Mobile */
+
+@media screen and (max-width: 900px) {
+  .sigma_inner {
+    padding: 0 10px;
+  }
+}
+
+.SADefault_button {
+  width: 46%;
+}

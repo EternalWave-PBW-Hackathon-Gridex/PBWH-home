@@ -1,0 +1,30 @@
+.AKLaodingLogo {
+  animation: AK_gologo 1s cubic-bezier(0, 0, 0.58, 1) 0s forwards;
+}
+
+@keyframes AK_gologo {
+  20% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(50px);
+  }
+  100% {
+    transform: translateY(calc((-50vh + 100px)));
+  }
+}
+
+.AKLoadingBack {
+  animation: AK_loading_back 1s cubic-bezier(0, 0, 0.2, 1) 0s forwards;
+}
+
+@keyframes AK_loading_back {
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
