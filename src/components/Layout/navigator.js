@@ -42,6 +42,26 @@ const LINK_MENUS = {
     icon: ConvertIcon,
     activeIcon: ConvertActiveIcon
     // disabled: true
+  },
+  farm: {
+    name: "Farm",
+    to: "/farm",
+    icon: FarmIcon,
+    activeIcon: FarmActiveIcon
+  },
+  vote: {
+    name: "Vote",
+    to: "/vote/pool",
+    icon: VoteIcon,
+    activeIcon: VoteActiveIcon
+    // disabled: true
+  },
+  govern: {
+    name: "Govern",
+    to: "/govern",
+    icon: GovernIcon,
+    activeIcon: GovernActiveIcon
+    // disabled: true
   }
 };
 

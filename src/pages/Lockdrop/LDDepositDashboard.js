@@ -448,7 +448,7 @@ const LockPeriod = ({
           const isFirstIndex = index === 0;
           return (
             <SigmaButton
-              className={`flex justify-center items-center w-[20%] hover:border-hidden hover:bg-[#aa00ff] border-[#ffffff50]  border-y-[1px]  ${
+              className={`flex justify-center items-center w-[20%] hover:border-hidden hover:bg-[#18e7b7] border-[#ffffff50]  border-y-[1px]  ${
                 !isLastIndex && "border-r-[1px] "
               } ${isFirstIndex && "rounded-l-md border-l-[1px]"} ${
                 isLastIndex && "rounded-r-md border-r-[1px]"

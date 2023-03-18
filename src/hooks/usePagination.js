@@ -33,7 +33,7 @@ function usePagination(pageCount, handlePageCallback) {
         onChange={handlePagination}
         sx={{
           "& .MuiPaginationItem-root.Mui-selected": {
-            backgroundColor: "#aa00ff",
+            backgroundColor: "#18e7b7",
             color: "black"
           },
           "& .MuiPaginationItem-root": {

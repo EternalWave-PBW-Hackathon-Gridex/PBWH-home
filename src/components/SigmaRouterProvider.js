@@ -8,9 +8,9 @@ import Layout from "./Layout";
 import Lockdrop from "../pages/Lockdrop";
 // import Mint from "../pages/Mint";
 import Convert from "../pages/Convert";
-// import Farm from "../pages/Farm";
+import Farm from "../pages/Farm";
 // import Vote from "../pages/Vote";
-// import Govern from "../pages/Govern";
+import Govern from "../pages/Govern";
 // import VoteConnector from "../context/Vote/VoteConnector";
 import TokenPriceConnector from "../context/TokenPriceConnector";
 
@@ -31,15 +31,15 @@ const SigmaRouterProvider = (props) => {
         {
           path: "/lockdrop",
           element: <Lockdrop />
-        }
+        },
         // {
         //   path: "/mint",
         //   element: <Mint />
         // },
-        // {
-        //   path: "/farm",
-        //   element: <Farm />
-        // },
+        {
+          path: "/farm",
+          element: <Farm />
+        },
         // {
         //   path: "/vote/:voteContent",
         //   element: (
@@ -48,10 +48,10 @@ const SigmaRouterProvider = (props) => {
         //     </VoteConnector.Provider>
         //   )
         // },
-        // {
-        //   path: "/govern",
-        //   element: <Govern />
-        // }
+        {
+          path: "/govern",
+          element: <Govern />
+        }
       ]
     }
 
