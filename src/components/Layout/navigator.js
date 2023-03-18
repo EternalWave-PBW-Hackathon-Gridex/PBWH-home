@@ -25,7 +25,7 @@ import TelegramIcon from "../../assets/images/navigator_telegram.png";
 import DiscordIcon from "../../assets/images/navigator_discord.png";
 import GithubIcon from "../../assets/images/navigator_github.png";
 
-import SigmaLogo from "../../assets/images/global_logo-text.png";
+import SigmaLogo from "../../assets/images/global_logo-korea.png";
 import ClockIcon from "../../assets/images/global_clock.png";
 
 const LINK_MENUS = {

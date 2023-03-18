@@ -57,7 +57,7 @@ const useConnector = () => {
           walletKey: connectionInfo[0].label
         });
         await setChain({
-          chainId: CHAINS[isProduction ? "POLYGON" : "MUMBAI"].id
+          chainId: CHAINS[isProduction ? "ABITRUM" : "GOERLI"].id
         });
       } catch (e) {
         console.log(e);
@@ -83,7 +83,9 @@ const useConnector = () => {
 
     if (!ethersProvider) return false;
 
-    await setChain({ chainId: CHAINS.MUMBAI.id });
+    await setChain({
+      chainId: CHAINS[isProduction ? "ABITRUM" : "GOERLI"].id
+    });
 
     return true;
   }, [wallet, ethersProvider]);

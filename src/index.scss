@@ -74,44 +74,44 @@
 }
 
 /** Web3 Onboard Custom Style */
-:root {
-  --onboard-modal-z-index: 100;
+// :root {
+//   --onboard-modal-z-index: 100;
 
-  --onboard-connect-sidebar-background: #e6783c;
-  --onboard-connect-sidebar-color: #262739;
-  // --onboard-close-button-background: #0b0b22;
-  // --onboard-close-button-color: white;
-  --onboard-connect-sidebar-progress-background: #262739;
-  --onboard-connect-sidebar-progress-color: #aa00ff;
-  --onboard-main-scroll-container-background: #262739;
-  @media screen and (max-width: 767px) {
-    --onboard-main-scroll-container-background: #e6783c;
-  }
+//   --onboard-connect-sidebar-background: #e6783c;
+//   --onboard-connect-sidebar-color: #262739;
+//   // --onboard-close-button-background: #0b0b22;
+//   // --onboard-close-button-color: white;
+//   --onboard-connect-sidebar-progress-background: #262739;
+//   --onboard-connect-sidebar-progress-color: #aa00ff;
+//   --onboard-main-scroll-container-background: #262739;
+//   @media screen and (max-width: 767px) {
+//     --onboard-main-scroll-container-background: #e6783c;
+//   }
 
-  --onboard-connect-header-background: #262739;
-  --onboard-connect-header-color: #e6783c;
+//   --onboard-connect-header-background: #262739;
+//   --onboard-connect-header-color: #e6783c;
 
-  // Container Wallet Button
-  --onboard-wallet-button-color: "#e6783c";
-  --onboard-wallet-button-background-hover: #aa00ff;
-  --onboard-wallet-button-border-color: none;
-  // --onboard-wallet-app-icon-border-color: none;
-  --onboard-close-button-background: none;
-  --onboard-close-button-color: #aa00ff;
+//   // Container Wallet Button
+//   --onboard-wallet-button-color: "#e6783c";
+//   --onboard-wallet-button-background-hover: #aa00ff;
+//   --onboard-wallet-button-border-color: none;
+//   // --onboard-wallet-app-icon-border-color: none;
+//   --onboard-close-button-background: none;
+//   --onboard-close-button-color: #aa00ff;
 
-  // Account Center
-  --account-center-z-index: 99;
-  --account-center-minimized-background: #262739;
-  --account-center-minimized-address-color: #e6783c;
-  --account-center-app-btn-background: #aa00ff;
-  --account-center-micro-background: #262739;
-  // --account-center-border: #aa00ff;
-  --account-center-maximized-upper-action-color: #aa00ff;
-  // --account-center-maximized-info-section-background-color: #aa00ff
+//   // Account Center
+//   --account-center-z-index: 99;
+//   --account-center-minimized-background: #262739;
+//   --account-center-minimized-address-color: #e6783c;
+//   --account-center-app-btn-background: #aa00ff;
+//   --account-center-micro-background: #262739;
+//   // --account-center-border: #aa00ff;
+//   --account-center-maximized-upper-action-color: #aa00ff;
+//   // --account-center-maximized-info-section-background-color: #aa00ff
 
-  // Colors
-  // --onboard-gray-700: #e6783c;
-}
+//   // Colors
+//   // --onboard-gray-700: #e6783c;
+// }
 
 /** postcss-100vh-fix */
 .layout {

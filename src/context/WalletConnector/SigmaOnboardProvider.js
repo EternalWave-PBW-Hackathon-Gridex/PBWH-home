@@ -18,21 +18,21 @@ const SigmaOnboardProvider = ({ children }) => {
     },
     connectFirstChainId: true
   });
-  const portis = portisModule({
-    apiKey: `78b072fb-3b6d-46e2-978f-c65f5b130f86` // TODO
-  });
-  const wallets = [injected, coinbaseWalletSdk, walletConnect, portis];
+  // const portis = portisModule({
+  //   apiKey: `78b072fb-3b6d-46e2-978f-c65f5b130f86` // TODO
+  // });
+  const wallets = [injected, coinbaseWalletSdk, walletConnect];
 
-  const chains = [CHAINS[isProduction ? "POLYGON" : "MUMBAI"]];
+  const chains = [CHAINS[isProduction ? "ABITRUM" : "GOERLI"]];
 
   const appMetadata = {
-    name: "Shogun",
+    name: "Eternal Wave",
     icon: RESOURCES.ICON,
     logo: RESOURCES.BANNER,
-    description: "Shogun Description",
+    description: "Eternal Wave is brandnew PBW Hackathon team",
     gettingStartedGuide:
       "https://docs.sigmaprotocol.app/product/convert-ksp-into-sigksp",
-    explore: "https://mumbai.polygonscan.com/",
+    explore: "https://arbiscan.io/",
     // agreement: {
     //   version: '1.0.0',
     //   termsUrl: 'https://www.blocknative.com/terms-conditions',

@@ -71,9 +71,9 @@ export const TOKENS = {
 };
 
 export const AlchemyProvider = new ethers.providers.JsonRpcProvider(
-  CHAINS[isProduction ? "POLYGON" : "MUMBAI"].rpcUrl
+  CHAINS[isProduction ? "ABITRUM" : "GOERLI"].rpcUrl
 );
 
 export const AlchemyMainnetProvider = new ethers.providers.JsonRpcProvider(
-  CHAINS.POLYGON.rpcUrl
+  CHAINS.ABITRUM.rpcUrl
 );

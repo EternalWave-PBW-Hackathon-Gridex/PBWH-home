@@ -109,7 +109,7 @@ export const TestContractInfo = {
 };
 
 const AlchemyProvider = new ethers.providers.JsonRpcProvider(
-  CHAINS.MUMBAI.rpcUrl
+  CHAINS.GOERLI.rpcUrl
 );
 
 export const TestContract = new ethers.Contract(
