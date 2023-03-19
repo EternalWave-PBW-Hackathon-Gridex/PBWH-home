@@ -20,7 +20,7 @@ import { getAbbreviateNumberFormat } from "../../../web3/utils/numberFormat";
 import useDailyPoolVotingHarvest from "../../../hooks/Strapi/useDailyPoolVotingHarvest";
 
 const SHOStakingRow = () => {
-  const [openDetails, setOpenDetails] = React.useState(false);
+  const [openDetails, setOpenDetails] = React.useState(true);
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
 
   const {
@@ -122,7 +122,7 @@ const SHOStakingRow = () => {
   } = useSigmaAlert({
     defaultInfo: {
       title: "Stake",
-      subTitle: `Stake ${TOKENS.SHO.name} to Grindex to earn rewards.\nThere is a 7 days unstaking period. `
+      subTitle: `Stake ${TOKENS.GRIN.name} to Grindex to earn rewards.\nThere is a 7 days unstaking period. `
     },
     children: (
       <SHOStakeModal
@@ -140,7 +140,7 @@ const SHOStakingRow = () => {
   } = useSigmaAlert({
     defaultInfo: {
       title: "Unstake",
-      subTitle: `Unstake ${TOKENS.xSHO.name} to receive ${TOKENS.SHO.name}.\nThere is a 7 days unstaking period. `
+      subTitle: `Unstake ${TOKENS.xGRIN.name} to receive ${TOKENS.GRIN.name}.\nThere is a 7 days unstaking period. `
     },
     children: (
       <SHOUnStakeModal
@@ -176,7 +176,7 @@ const SHOStakingRow = () => {
     if (!isValid) return "-";
 
     const dailyPoolVotingHarvestSHOFarmBN = BN(
-      dailyPoolVotingHarvest.SHO.shoToShoFarm
+      dailyPoolVotingHarvest.GRIN.shoToShoFarm
     );
     const isValidHarvest = !dailyPoolVotingHarvestSHOFarmBN.isNaN();
     if (!isValidHarvest) return "-";
@@ -197,10 +197,10 @@ const SHOStakingRow = () => {
       <div className="w-full  flex sm:flex-row flex-col ">
         <div className="flex sm:w-[22%] w-full min-w-[60px]  items-center ">
           <div className="xlg:min-w-[60px] xlg:w-[60px] xlg:h-[60px] lg:min-w-[50px] lg:w-[50px] lg:h-[50px] min-w-[40px] w-[40px] h-[40px] flex rounded-full mr-[10px]">
-            <img src={TOKENS.SHO.logo} alt="logo" />
+            <img src={TOKENS.GRIN.logo} alt="logo" />
           </div>
           <p className="xlg:text-[20px] lg:text-[18px] text-[16px] xlg:font-semibold font-medium">
-            {`${TOKENS.SHO.name} staking`}
+            {`${TOKENS.GRIN.name} staking`}
           </p>
         </div>
         <div className=" sm:my-0 my-[10px] flex sm:flex-col flex-row sm:w-[47%] w-full  sm:justify-center justify-between  xlg:text-[16px] lg:text-[15px] text-[14px] relative">
@@ -262,12 +262,12 @@ const GovernButtonGroup = ({ onClickDetail, handleSIGStaking }) => {
         leftBtnLoading={false}
         rightBtnLoading={false}
       />
-      <SigmaButton
+      {/* <SigmaButton
         className={`h-[45px] xlg:text-[18px] lg:text-[16px] text-[14px] font-semibold w-full rounded-md flex justify-center items-center  AKBtnEffect border-[1px] border-[#ffffff50] mt-[15px]`}
         onClick={onClickDetail}
       >
         Details
-      </SigmaButton>
+      </SigmaButton> */}
     </div>
   );
 };

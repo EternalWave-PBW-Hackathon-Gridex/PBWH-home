@@ -16,8 +16,8 @@ const Govern = (props) => {
     <section className="w-full flex justify-center">
       <div className="mt-[120px] w-[90%] ">
         <SHOStakingRow />
-        <XSHOStakingRow />
-        <BoostActivationRow />
+        {/* <XSHOStakingRow /> */}
+        {/* <BoostActivationRow /> */}
       </div>
     </section>
   );

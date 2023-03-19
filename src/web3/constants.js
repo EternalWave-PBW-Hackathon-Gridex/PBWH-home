@@ -86,6 +86,10 @@ export const TOKENS = {
     name: "GRIN",
     logo: SHOlogo
   },
+  xGRIN: {
+    name: "xGRIN",
+    logo: xSHOlogo
+  },
   "ETH/GDX": {
     name: "ETH/GDX",
     logo: shoMESHMESHLogo

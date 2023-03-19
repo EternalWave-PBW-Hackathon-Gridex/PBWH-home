@@ -1,9 +1,6 @@
 import React from "react";
 import FarmListHeaderRow from "./FarmListHeaderRow";
-import SHOUSDCLPFarmListRow from "./SHOUSDCLPFarmListRow";
 import ShoMESHMESHLPFarmListRow from "./ShoMESHMESHLPFarmListRow";
-import SHOMESHStakingListRow from "./SHOMESHStakingListRow";
-import SHOMESHFarmListRow from "./SHOMESHFarmListRow";
 import TEMPLPFarmListRow from "./TEMPLPFarmListRow";
 
 const FarmList = () => {

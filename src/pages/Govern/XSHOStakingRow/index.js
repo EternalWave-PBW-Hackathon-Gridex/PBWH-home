@@ -120,21 +120,21 @@ const XSHOStakingRow = () => {
       <div className="w-full  flex sm:flex-row flex-col ">
         <div className="flex sm:w-[22%] w-full min-w-[60px]  items-center ">
           <div className="xlg:min-w-[60px] xlg:w-[60px] xlg:h-[60px] lg:min-w-[50px] lg:w-[50px] lg:h-[50px] min-w-[40px] w-[40px] h-[40px] flex rounded-full mr-[10px]">
-            <img src={TOKENS.xSHO.logo} alt="logo" />
+            <img src={TOKENS.xGRIN.logo} alt="logo" />
           </div>
           <p className="xlg:text-[20px] lg:text-[18px] text-[16px] xlg:font-semibold font-medium">
-            {`${TOKENS.xSHO.name} staking`}
+            {`${TOKENS.xGRIN.name} staking`}
           </p>
         </div>
         <div className=" sm:my-0 my-[10px] flex sm:flex-col flex-row sm:w-[47%] w-full  sm:justify-center justify-between  xlg:text-[16px] lg:text-[15px] text-[14px] relative">
           <p className="sm:absolute relative sm:top-[15px] top-0 text-[14px] opacity-50">
-            {`Total ${TOKENS.xSHO.name} Staked`}
+            {`Total ${TOKENS.xGRIN.name} Staked`}
           </p>
           <FarmListRowValue
             isWalletConnected={isWalletConnected}
             loading={isLoadingBalance}
             error={false}
-            valueNode={`${displayNumberFormatBalance} ${TOKENS.xSHO.name}`}
+            valueNode={`${displayNumberFormatBalance} ${TOKENS.xGRIN.name}`}
           />
         </div>
 
