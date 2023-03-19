@@ -18,22 +18,15 @@ import TokenPriceConnector from "../../../context/TokenPriceConnector";
 import { BN, isBNPositive } from "../../../web3/utils/AKBN";
 import { getAbbreviateNumberFormat } from "../../../web3/utils/numberFormat";
 import useDailyPoolVotingHarvest from "../../../hooks/Strapi/useDailyPoolVotingHarvest";
+import GRINTokenContract from "../../../web3/contracts/GRINTokenContract";
 
 const SHOStakingRow = () => {
   const [openDetails, setOpenDetails] = React.useState(true);
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
 
-  const {
-    shoPrice,
-    isLoadingSHOPrice,
-    shoPriceBN,
-    isValidSHOPrice,
-    isPositiveSHOPrice,
-    displaySHOPrice,
-    convertedSHOPrice,
-
-    fetchSHOPrice
-  } = TokenPriceConnector.useContainer();
+  const isPositiveSHOPrice = true;
+  const isLoadingSHOPrice = false;
+  const shoPriceBN = BN(1);
 
   const {
     isLoadingDailyPoolVotingHarvest,
@@ -50,12 +43,12 @@ const SHOStakingRow = () => {
     isPositiveBalance: isPositiveSHOBalance,
 
     fetchBalance: fetchSHOBalance
-  } = useSHOStakingRowSHObalance(SHOTokenContract);
+  } = useSHOStakingRowSHObalance(GRINTokenContract);
 
   useSigmaDidMount(
     () => {
       fetchSHOBalance(SHOFarm.address);
-      fetchSHOPrice();
+
       fetchDailyPoolVotingHarvest();
     },
     [],
@@ -67,7 +60,6 @@ const SHOStakingRow = () => {
       case "Stake":
       case "Unstake":
       case "redeem":
-        setOpenDetails(false);
         break;
 
       default:
@@ -204,9 +196,7 @@ const SHOStakingRow = () => {
           </p>
         </div>
         <div className=" sm:my-0 my-[10px] flex sm:flex-col flex-row sm:w-[47%] w-full  sm:justify-center justify-between  xlg:text-[16px] lg:text-[15px] text-[14px] relative">
-          <p className="sm:absolute relative sm:top-[15px] top-0 text-[14px] opacity-50">
-            APR
-          </p>
+          <p className=" relative  top-0 text-[14px] opacity-50">APR</p>
           <FarmListRowValue
             isWalletConnected={isWalletConnected}
             loading={isLoadingAPR}

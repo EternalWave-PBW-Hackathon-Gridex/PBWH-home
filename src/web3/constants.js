@@ -11,6 +11,15 @@ import SHOUSDCLogo from "../assets/images/global_token_SHO-USDC.png";
 import shoMESHMESHLogo from "../assets/images/global_token_shoMESH-MESH.png";
 import SHOMESHLogo from "../assets/images/global_token_shoMESH.png";
 
+import TRILogo from "../assets/images/global_token-triple.png";
+import DUOLogo from "../assets/images/global_token-duo.png";
+import GRINlogo from "../assets/images/global_token-grin.png";
+import XGRINlogo from "../assets/images/global_token-xgrin.png";
+
+import ETHLogo from "../assets/images/global_token-eth.png";
+import GDXLogo from "../assets/images/global_token-gdx.png";
+import BTCLogo from "../assets/images/global_token-btc.png";
+
 export const ContractCallState = {
   NEW: "NEW",
   FETCHING: "FETCHING",
@@ -72,31 +81,31 @@ export const TOKENS = {
   // GRINDEX
   ETH: {
     name: "ETH",
-    logo: MESHlogo
+    logo: ETHLogo
   },
   GDX: {
     name: "GDX",
-    logo: SHOlogo
+    logo: GDXLogo
   },
   BTC: {
     name: "BTC",
-    logo: xSHOlogo
+    logo: BTCLogo
   },
   GRIN: {
     name: "GRIN",
-    logo: SHOlogo
+    logo: GRINlogo
   },
   xGRIN: {
     name: "xGRIN",
-    logo: xSHOlogo
+    logo: XGRINlogo
   },
   "ETH/GDX": {
     name: "ETH/GDX",
-    logo: shoMESHMESHLogo
+    logo: DUOLogo
   },
   "BTC/ETH/GDX": {
     name: "BTC/ETH/GDX",
-    logo: shoMESHMESHLogo
+    logo: TRILogo
   }
 };
 

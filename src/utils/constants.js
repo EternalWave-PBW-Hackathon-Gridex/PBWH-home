@@ -1,5 +1,5 @@
-export const isProduction = process.env.REACT_APP_IS_PRODUCTION === "TRUE";
-// export const isProduction = true;
+// export const isProduction = process.env.REACT_APP_IS_PRODUCTION === "TRUE";
+export const isProduction = true;
 console.log(`${isProduction ? "production" : "development"} `);
 
 export const PROJECT_ID = "shogun";

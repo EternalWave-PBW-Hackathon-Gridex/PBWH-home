@@ -24,21 +24,19 @@ import useSHOStakingSHOStaked from "./useSHOStakingSHOStaked";
 import SigmaButton from "../../../components/Animation/SigmaButton";
 import SHOFarmRedeemModal from "./Modal/SHOFarmRedeemModal";
 import { useSigmaAlert } from "../../../components/SigmaAlert";
+import xGRINTokenContract from "../../../web3/contracts/xGRINTokenContract";
+import GRINTokenContract from "../../../web3/contracts/GRINTokenContract";
 
 const SHOStakingDetails = ({ onSuccessTransactions }) => {
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
 
-  const {
-    isLoadingSHOPrice,
-    displaySHOPrice,
-
-    fetchSHOPrice
-  } = TokenPriceConnector.useContainer();
+  const isLoadingSHOPrice = false;
+  const displaySHOPrice = "1";
   const {
     isLoadingTotalSupply: isLoadingXSHOTotalSupply,
     displayTotalSupply: displayXSHOTotalSupply,
     fetchTotalSupply: fetchXSHOTotalSupply
-  } = useERC20TotalSupply(xSHOTokenContract);
+  } = useERC20TotalSupply(xGRINTokenContract);
 
   const {
     isLoadingBalance: isLoadingXSHOBalance,
@@ -47,14 +45,14 @@ const SHOStakingDetails = ({ onSuccessTransactions }) => {
     displayBalance: displayXSHOBalance,
 
     fetchBalance: fetchXSHOBalance
-  } = useERC20Balance(xSHOTokenContract);
+  } = useERC20Balance(xGRINTokenContract);
 
   const {
     isLoadingBalance: isLoadingSHOBalance,
     displayNumberFormatBalance: displayNumberFormatSHOBalance,
 
     fetchBalance: fetchSHOBalance
-  } = useSHOStakingRowSHObalance(SHOTokenContract);
+  } = useSHOStakingRowSHObalance(GRINTokenContract);
 
   const {
     xSHOExchangeRateBN,
@@ -83,7 +81,6 @@ const SHOStakingDetails = ({ onSuccessTransactions }) => {
     fetchXSHOExchangeRate();
 
     fetchSHOBalance(address);
-    fetchSHOPrice();
 
     fetchWithdrawInfos();
     fetchRedeemableSHO();
@@ -175,7 +172,7 @@ const SHOStakingDetails = ({ onSuccessTransactions }) => {
         <div className="w-[4.84%] mr-[10px] sm:flex hidden" />
         <GovernStakingDetailItem
           className="sm:w-[17.16%] w-full"
-          title={`${TOKENS.SHO.name} Staked`}
+          title={`${TOKENS.GRIN.name} Staked`}
           loading={isLoadingTotalSHOStaked}
           isWalletConnected={isWalletConnected}
           contentNode={<p className="">{`${displayTotalSHOStaked} %`}</p>}
@@ -183,11 +180,11 @@ const SHOStakingDetails = ({ onSuccessTransactions }) => {
         <div className=" flex sm:w-[47%] w-full  justify-center sm:flex-row flex-col">
           <GovernStakingDetailItem
             className="sm:w-[33.33%] w-full"
-            title={`${TOKENS.xSHO.name} Supply`}
+            title={`${TOKENS.xGRIN.name} Supply`}
             loading={isLoadingXSHOTotalSupply}
             isWalletConnected={isWalletConnected}
             contentNode={
-              <p className="">{`${displayXSHOTotalSupply} ${TOKENS.xSHO.name}`}</p>
+              <p className="">{`${displayXSHOTotalSupply} ${TOKENS.xGRIN.name}`}</p>
             }
           />
           <GovernStakingDetailItem
@@ -196,12 +193,12 @@ const SHOStakingDetails = ({ onSuccessTransactions }) => {
             loading={isLoadingXSHOExchangeRate}
             isWalletConnected={isWalletConnected}
             contentNode={
-              <p className="">{`${displayXSHOExchangeRate} ${TOKENS.SHO.name}/${TOKENS.xSHO.name}`}</p>
+              <p className="">{`${displayXSHOExchangeRate} ${TOKENS.GRIN.name}/${TOKENS.xGRIN.name}`}</p>
             }
           />
           <GovernStakingDetailItem
             className="sm:w-[33.33%] w-full"
-            title={`${TOKENS.SHO.name} Price`}
+            title={`${TOKENS.GRIN.name} Price`}
             loading={isLoadingSHOPrice}
             isWalletConnected={isWalletConnected}
             contentNode={
@@ -217,13 +214,13 @@ const SHOStakingDetails = ({ onSuccessTransactions }) => {
         <div className="w-full flex sm:flex-row flex-col shogun_bg-primary px-[10px] pt-[30px] pb-[10px] rounded-md ">
           <GovernStakingDetailItem
             className="sm:w-[18.03%] w-full opacity-50 "
-            title={`${TOKENS.xSHO.name} Balance`}
+            title={`${TOKENS.xGRIN.name} Balance`}
             loading={isLoadingXSHOBalanceItem}
             isWalletConnected={isWalletConnected}
             contentNode={
               <div className="flex flex-col">
-                <p className="">{`${displayXSHOBalance} ${TOKENS.xSHO.name}`}</p>
-                <p className="">{`=${stakedSHO} ${TOKENS.SHO.name}`}</p>
+                <p className="">{`${displayXSHOBalance} ${TOKENS.xGRIN.name}`}</p>
+                <p className="">{`=${stakedSHO} ${TOKENS.GRIN.name}`}</p>
               </div>
             }
           />
@@ -234,7 +231,7 @@ const SHOStakingDetails = ({ onSuccessTransactions }) => {
               loading={isLoadingSHOBalance}
               isWalletConnected={isWalletConnected}
               contentNode={
-                <p>{`${displayNumberFormatSHOBalance} ${TOKENS.SHO.name}`} </p>
+                <p>{`${displayNumberFormatSHOBalance} ${TOKENS.GRIN.name}`} </p>
               }
             />
             <GovernStakingDetailItem
@@ -244,7 +241,7 @@ const SHOStakingDetails = ({ onSuccessTransactions }) => {
               isWalletConnected={isWalletConnected}
               contentNode={
                 <div className="flex flex-col">
-                  <p className="">{`${displayTotalUnstakingAmount} ${TOKENS.SHO.name}`}</p>
+                  <p className="">{`${displayTotalUnstakingAmount} ${TOKENS.GRIN.name}`}</p>
                   {!isEmptyWithdrawInfos && (
                     <AKTooltip
                       parent={
@@ -267,7 +264,7 @@ const SHOStakingDetails = ({ onSuccessTransactions }) => {
                                 <p
                                   key={`Unstaking-item-${index + 1}`}
                                   className="mb-[5px]"
-                                >{`⏳ ${SHOAmount} ${TOKENS.SHO.name} (${xSHOAmount} ${TOKENS.xSHO.name}) - Unlocked on ${formatedUnlockTime}`}</p>
+                                >{`⏳ ${SHOAmount} ${TOKENS.GRIN.name} (${xSHOAmount} ${TOKENS.xGRIN.name}) - Unlocked on ${formatedUnlockTime}`}</p>
                               );
                             }
                           )}
@@ -285,7 +282,7 @@ const SHOStakingDetails = ({ onSuccessTransactions }) => {
               loading={isLoadingRedeemableSHO}
               isWalletConnected={isWalletConnected}
               contentNode={
-                <p className="">{`${displayNumberFormatRedeemableSHO} ${TOKENS.SHO.name}`}</p>
+                <p className="">{`${displayNumberFormatRedeemableSHO} ${TOKENS.GRIN.name}`}</p>
               }
             />
           </div>

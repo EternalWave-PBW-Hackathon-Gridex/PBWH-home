@@ -17,6 +17,8 @@ import { TOKENS } from "../../../../web3/constants";
 import useERC20 from "../../../../web3/hooks/ERC20/useERC20";
 import SigmaButton from "../../../../components/Animation/SigmaButton";
 import xSHOTokenContract from "../../../../web3/contracts/xSHOTokenContract";
+import xGRINTokenContract from "../../../../web3/contracts/xGRINTokenContract";
+import GRINFarm from "../../../../web3/contracts/GRINFarmContract/GRINFarm";
 
 const SHOUnStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
@@ -36,7 +38,7 @@ const SHOUnStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
     isValidApproveTransaction,
     isLoadingApproveButton,
     isValidTxInERC20
-  } = useERC20(xSHOTokenContract);
+  } = useERC20(xGRINTokenContract);
 
   const {
     isLoadingUnstakeSHOTxFee,
@@ -58,8 +60,8 @@ const SHOUnStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
     weiValue,
     isValidTxInInput
   } = useSigmaCurrencyInput({
-    name: TOKENS.xSHO.name,
-    placeholder: `${TOKENS.xSHO.name} to Unstake`,
+    name: TOKENS.xGRIN.name,
+    placeholder: `${TOKENS.xGRIN.name} to Unstake`,
     balance: XSHOBalance
   });
 
@@ -71,7 +73,7 @@ const SHOUnStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
   /** LifeCycle */
   useSigmaDidMount(() => {
     fetchXSHOBalance(address);
-    fetchAllowance(address, SHOFarm.address);
+    fetchAllowance(address, GRINFarm.address);
   });
 
   /** Debounce */
@@ -96,8 +98,8 @@ const SHOUnStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
       return;
     }
     if (!isValidApproveTransaction) return;
-    fetchApprove(SHOFarm.address).then(() => {
-      fetchAllowance(address, SHOFarm.address);
+    fetchApprove(GRINFarm.address).then(() => {
+      fetchAllowance(address, GRINFarm.address);
     });
   };
 
@@ -138,7 +140,7 @@ const SHOUnStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
       <UnitValueDisplay
         title="Balance"
         value={displayXSHOBalance}
-        unit={TOKENS.xSHO.name}
+        unit={TOKENS.xGRIN.name}
         className="mb-[10px]"
         loading={isLoadingXSHOBalance}
       />
@@ -151,7 +153,7 @@ const SHOUnStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
         {maxComponent}
 
         <LPTokenDisplay
-          tokenInfo={TOKENS.xSHO}
+          tokenInfo={TOKENS.xGRIN}
           className="sm:min-w-[33%] min-w-[28%] border-[#ffffff20] border-[1px] rounded-r-md"
         />
       </div>

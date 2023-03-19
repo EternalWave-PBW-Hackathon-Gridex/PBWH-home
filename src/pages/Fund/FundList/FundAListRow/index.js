@@ -31,7 +31,7 @@ const tokens = [
 ];
 
 const FundAListRow = () => {
-  const [openDetails, setOpenDetails] = React.useState(true);
+  const [openDetails, setOpenDetails] = React.useState(false);
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
   const {
     isLoadingSHOMESHPrice,
