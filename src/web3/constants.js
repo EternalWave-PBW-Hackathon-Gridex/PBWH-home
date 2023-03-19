@@ -67,6 +67,20 @@ export const TOKENS = {
   USDC: {
     name: "USDC",
     logo: USDClogo
+  },
+
+  //
+  ETH: {
+    name: "ETH",
+    logo: MESHlogo
+  },
+  GDX: {
+    name: "GDX",
+    logo: SHOlogo
+  },
+  BTC: {
+    name: "BTC",
+    logo: xSHOlogo
   }
 };
 

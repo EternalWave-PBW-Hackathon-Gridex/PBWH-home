@@ -8,7 +8,6 @@ import {
   getAbbreviateNumberFormat
 } from "../../../utils/numberFormat";
 import { BN, isBNPositive } from "../../../utils/AKBN";
-import { STAGE_TWO_END_UNIX } from "../../../../pages/Lockdrop";
 
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
@@ -83,9 +82,7 @@ export default function useLDDepositInfo(fromAddress) {
     const bn = BN(depositInfo?.lockMonth?.toString());
 
     const lockUntilUnixTime =
-      isBNPositive(bn) && isCallSuccess
-        ? STAGE_TWO_END_UNIX + bn.toNumber()
-        : 0;
+      isBNPositive(bn) && isCallSuccess ? 0 + bn.toNumber() : 0;
 
     const currentUnixTime = dayjs().unix();
 

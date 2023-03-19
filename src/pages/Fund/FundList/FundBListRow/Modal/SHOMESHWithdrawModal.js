@@ -9,20 +9,33 @@ import { LoadingModal } from "../../../../../components/Loading";
 import useSigmaDidMount from "../../../../../hooks/useSigmaDidMount";
 import Connector from "../../../../../context/WalletConnector/Connector";
 import useSigmaCurrencyInput from "../../../../../hooks/TextField/useSigmaCurrencyInput";
+import SHOFarm from "../../../../../web3/contracts/SHOFarmContract/SHOFarm";
 import { TOKENS } from "../../../../../web3/constants";
+import useERC20Balance from "../../../../../web3/hooks/ERC20/useERC20Balance";
 import SigmaButton from "../../../../../components/Animation/SigmaButton";
-import useSMFConstants from "../../../../../web3/hooks/SHOMESHFarm/ReadOnly/useSMFConstants";
-import useSMFWithdraw from "../../../../../web3/hooks/SHOMESHFarm/useSMFWithdraw";
+import MeshswapEscrowContract from "../../../../../web3/contracts/MeshswapEscrowContract";
+import useSMSWithdraw from "../../../../../web3/hooks/SHOMESHStaking/useSMSWithdraw";
+import SHOMESHStaking from "../../../../../web3/contracts/SHOMESHStakingContract/SHOMESHStaking";
+import useSMSConstants from "../../../../../web3/hooks/SHOMESHStaking/ReadOnly/useSMSConstants";
+
 const SHOMESHWithdrawModal = ({ handleCancelPopup, onSuccessTransactions }) => {
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
 
+  // const {
+  //   balance: SHOMESHBalance,
+  //   isPositiveBalance: isPositiveSHOMESHBalance,
+  //   fetchBalance: fetchSHOMESHBalance,
+  //   displayBalance: displaySHOMESHBalance,
+  //   isLoadingBalance: isLoadingSHOMESHBalance
+  // } = useERC20Balance(MeshswapEscrowContract);
+
   const {
-    isLoadingUserInfo,
-    amount,
-    displayAmount,
-    isPositiveAmount,
-    fetchUserInfo
-  } = useSMFConstants(address);
+    shoMESHBalance,
+    isPositiveSHOMESHBalance,
+    isLoadingSHOMESHBalance,
+    displaySHOMESHBalance,
+    fetchSHOMESHBalance
+  } = useSMSConstants(address);
 
   const {
     isCallSuccessWithdrawTxFee,
@@ -34,7 +47,7 @@ const SHOMESHWithdrawModal = ({ handleCancelPopup, onSuccessTransactions }) => {
     isLoadingWithdrawTx,
     fetchWithdrawTx,
     isValidWithdrawTx
-  } = useSMFWithdraw();
+  } = useSMSWithdraw();
 
   const {
     inputComponent,
@@ -47,21 +60,21 @@ const SHOMESHWithdrawModal = ({ handleCancelPopup, onSuccessTransactions }) => {
   } = useSigmaCurrencyInput({
     name: TOKENS.shoMESH.name,
     placeholder: `${TOKENS.shoMESH.name} to Withdraw`,
-    balance: amount
+    balance: shoMESHBalance
   });
 
   /** LifeCycle */
   useSigmaDidMount(() => {
-    fetchUserInfo();
+    fetchSHOMESHBalance(SHOMESHStaking.address);
   });
 
   /** Debounce */
   React.useEffect(() => {
-    if (isWalletConnected && isValidTxInInput && isPositiveAmount) {
-      if (!isLoadingWithdrawTxFee) setWithdrawTxFeeLoading();
+    if (isWalletConnected && isValidTxInInput && isPositiveSHOMESHBalance) {
+      if (!isCallSuccessWithdrawTxFee) setWithdrawTxFeeLoading();
       onDebounce(weiValue);
     }
-  }, [isValidTxInInput, isPositiveAmount, weiValue, isWalletConnected]);
+  }, [isValidTxInInput, isPositiveSHOMESHBalance, weiValue, isWalletConnected]);
 
   const onDebounce = React.useCallback(
     debounce((weiValue) => {
@@ -87,9 +100,10 @@ const SHOMESHWithdrawModal = ({ handleCancelPopup, onSuccessTransactions }) => {
   };
 
   /** Validations */
+
   const isValidTransaction = React.useMemo(() => {
-    return isValidTxInInput && isPositiveAmount && isValidWithdrawTx;
-  }, [isValidTxInInput, isPositiveAmount, isValidWithdrawTx]);
+    return isValidTxInInput && isPositiveSHOMESHBalance && isValidWithdrawTx;
+  }, [isValidTxInInput, isPositiveSHOMESHBalance, isValidWithdrawTx]);
 
   /** UI */
 
@@ -97,10 +111,10 @@ const SHOMESHWithdrawModal = ({ handleCancelPopup, onSuccessTransactions }) => {
     <div className={`mt-[35px] flex flex-col items-center relative w-full`}>
       <UnitValueDisplay
         title="Total Deposit"
-        value={displayAmount}
+        value={displaySHOMESHBalance}
         unit={TOKENS.shoMESH.name}
         className="mb-[10px]"
-        loading={isLoadingUserInfo}
+        loading={isLoadingSHOMESHBalance}
       />
       <div className={` flex w-full  transition-all hover:scale-105`}>
         {inputComponent}

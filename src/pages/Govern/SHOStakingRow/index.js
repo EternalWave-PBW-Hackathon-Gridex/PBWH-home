@@ -1,7 +1,7 @@
 import React from "react";
 
 import { FlexDualButton } from "../../../components/SigmaValueDisplay";
-import FarmListRowValue from "../../Farm/FarmList/FarmListRowValue";
+import FarmListRowValue from "../../Fund/FundList/FarmListRowValue";
 import AKTooltip from "../../../components/AKTooltip";
 import { TOKENS } from "../../../web3/constants";
 import Connector from "../../../context/WalletConnector/Connector";

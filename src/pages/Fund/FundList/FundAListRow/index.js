@@ -18,13 +18,20 @@ import { useSigmaAlert } from "../../../../components/SigmaAlert";
 import SHOMESHWithdrawModal from "./Modal/SHOMESHWithdrawModal";
 import SHOMESHClaimConfirmModal from "./Modal/SHOMESHClaimConfirmModal";
 import useHarvest from "../../../../hooks/Strapi/useHarvest";
+import FundDetails from "./FundDetails";
+import SHOTokenContract from "../../../../web3/contracts/SHOTokenContract";
+import MESHTokenContract from "../../../../web3/contracts/MESHTokenContract";
 
-const farmItem = {
-  token: TOKENS["shoMESH"]
-};
+import ArrowDownIcon from "../../../../assets/images/global_icon_arrow-down.png";
+import SigmaButton from "../../../../components/Animation/SigmaButton";
 
-const SHOMESHStakingListRow = () => {
-  const { token } = farmItem;
+const tokens = [
+  { ...TOKENS["ETH"], share: 20, contract: SHOTokenContract },
+  { ...TOKENS["GDX"], share: 80, contract: MESHTokenContract }
+];
+
+const FundAListRow = () => {
+  const [openDetails, setOpenDetails] = React.useState(true);
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
   const {
     isLoadingSHOMESHPrice,
@@ -90,71 +97,12 @@ const SHOMESHStakingListRow = () => {
     fetchEarnedInfo();
   });
 
-  const onClickStake = () => {
+  const onClickDetail = () => {
     if (!isWalletConnected) {
       connectWallet();
       return;
     }
-    openStakePopup();
-  };
-
-  const onClickWithdraw = () => {
-    if (!isWalletConnected) {
-      connectWallet();
-      return;
-    }
-    openWithdrawPopup();
-  };
-
-  const onClickClaim = () => {
-    if (!isWalletConnected) {
-      connectWallet();
-      return;
-    }
-
-    openClaimPopup();
-  };
-
-  const handleCancelPopup = (type) => {
-    switch (type) {
-      case "Stake":
-        closeStakePopup();
-        break;
-
-      case "Withdraw":
-        closeWithdrawPopup();
-        break;
-      case "Claim":
-        closeClaimPopup();
-
-        break;
-      default:
-        break;
-    }
-  };
-
-  const onSuccessTransactions = (type) => {
-    switch (type) {
-      case "Stake":
-        closeStakePopup();
-        fetchSHOMESHBalance();
-        fetchEarnedInfo();
-        break;
-
-      case "Withdraw":
-        closeWithdrawPopup();
-        fetchSHOMESHBalance();
-        fetchEarnedInfo();
-        break;
-      case "Claim":
-        closeClaimPopup();
-        fetchSHOMESHBalance();
-        fetchEarnedInfo();
-        break;
-
-      default:
-        break;
-    }
+    setOpenDetails(openDetails ? false : true);
   };
 
   /** TVL Item */
@@ -257,73 +205,14 @@ const SHOMESHStakingListRow = () => {
     };
   }, [isValidAPR, shoPriceBN, shoMESHPriceBN]);
 
-  /** Popups */
-  const {
-    popupComponent: StakePopup,
-    openModal: openStakePopup,
-    closeModal: closeStakePopup
-  } = useSigmaAlert({
-    defaultInfo: {
-      title: "Stake",
-      subTitle: `Supply ${farmItem.token.name} token to earn ${TOKENS.shoMESH.name} and ${TOKENS.SHO.name} rewards `
-    },
-    children: (
-      <SHOMESHStakeModal
-        handleCancelPopup={handleCancelPopup}
-        onSuccessTransactions={onSuccessTransactions}
-      />
-    ),
-    closeOnDocumentClick: false
-  });
-
-  const {
-    popupComponent: WithdrawPopup,
-    openModal: openWithdrawPopup,
-    closeModal: closeWithdrawPopup
-  } = useSigmaAlert({
-    defaultInfo: {
-      title: "Withdraw",
-      subTitle: `Withdraw ${farmItem.token.name} from ${TOKENS.shoMESH.name} staking pool`
-    },
-    children: (
-      <SHOMESHWithdrawModal
-        handleCancelPopup={handleCancelPopup}
-        onSuccessTransactions={onSuccessTransactions}
-      />
-    ),
-    closeOnDocumentClick: false
-  });
-
-  const {
-    popupComponent: ClaimPopup,
-    openModal: openClaimPopup,
-    closeModal: closeClaimPopup
-  } = useSigmaAlert({
-    defaultInfo: {
-      title: "Claim"
-    },
-    children: (
-      <SHOMESHClaimConfirmModal
-        handleCancelPopup={handleCancelPopup}
-        onSuccessTransactions={onSuccessTransactions}
-      />
-    ),
-    closeOnDocumentClick: false
-  });
-
   return (
-    <div className="relative flex flex-col w-full  p-[30px] shogun_bg-secondary mb-[15px] rounded-md transition-all hover:scale-[102%]">
-      {StakePopup}
-      {WithdrawPopup}
-      {ClaimPopup}
+    <div className="relative flex flex-col w-full  sm:p-[30px] p-[10px] shogun_bg-secondary mb-[15px] rounded-md transition-all hover:scale-[102%]">
       <div className="w-full  flex sm:flex-row flex-col">
-        <div className="flex sm:w-[22%] w-full  items-center sm:mt-0 mt-[10px]">
-          <div className="xlg:min-w-[60px] xlg:w-[60px] xlg:h-[60px] lg:min-w-[50px] lg:w-[50px] lg:h-[50px] min-w-[40px] w-[40px] h-[40px] flex rounded-full mr-[10px]">
-            <img src={token.logo} alt="logo" />
-          </div>
-          <p className="xlg:text-[20px] lg:text-[18px] text-[16px] xlg:font-semibold font-medium">
-            {`${token.name} Stake`}
-          </p>
+        <div className="flex relative sm:min-w-[13%] min-w-full  items-center   sm:mt-0 mt-[10px] ">
+          <TokenDisplay tokens={tokens} />
+        </div>
+        <div className="flex relative sm:w-[43%] w-full  items-center sm:mt-0 mt-[10px] ">
+          <Composition tokens={tokens} />
         </div>
         <div className="sm:w-[9%] w-full flex sm:justify-center justify-between items-center xlg:text-[16px] lg:text-[14px] md:text-[13px] text-[12px] sm:mt-0 mt-[10px]">
           <div className="sm:hidden flex opacity-50 ">TVL</div>
@@ -343,18 +232,6 @@ const SHOMESHStakingListRow = () => {
               error={false}
               valueNode={<p> {`${displayARP.sum} %`}</p>}
             />
-            <AKTooltip
-              tooltipElement={
-                <div className="flex flex-col">
-                  <p>{`${TOKENS.MESH.name} Staking Reward APR : ${displayARP.shoMESH} %`}</p>
-                  <p>{`${TOKENS.vMESH.name} Voting Reward APR : ${displayARP.SHO} %`}</p>
-                </div>
-                // <p>
-                //   The APR will be displayed after reward got accumulated for few
-                //   days.
-                // </p>
-              }
-            />
           </div>
         </div>
 
@@ -365,12 +242,12 @@ const SHOMESHStakingListRow = () => {
             loading={isLoadingSHOMESHBalance}
             error={false}
             valueNode={
-              <p className="">{`${displayNumberFormatSHOMESHBalance} ${token.name}`}</p>
+              <p className="">{`${displayNumberFormatSHOMESHBalance}`}</p>
             }
           />
         </div>
         {/* Your Earning */}
-        <div className="sm:w-[16%] w-full flex  sm:justify-center justify-between items-center whitespace-pre-wrap xlg:text-[16px] lg:text-[14px] md:text-[13px] text-[12px] sm:mt-0 mt-[5px]">
+        <div className="sm:w-[13%] w-full flex  sm:justify-center justify-between items-center whitespace-pre-wrap xlg:text-[16px] lg:text-[14px] md:text-[13px] text-[12px] sm:mt-0 mt-[5px]">
           <div className="sm:hidden flex opacity-50 ">Your Earnings</div>
           <FarmListRowValue
             isWalletConnected={isWalletConnected}
@@ -388,27 +265,59 @@ const SHOMESHStakingListRow = () => {
             }
           />
         </div>
-        <div className="flex justify-center items-center  sm:w-[31%] sm:max-w-[31%] w-full max-w-full sm:mt-0 mt-[10px]">
-          <TripleButtonGroup
-            className="w-full lg:h-[100px] md:h-[90px] sm:h-[80px] h-[100px]"
-            buttonClassName="md:text-[18px] sm:text-[16px] text-[14px] font-semibold"
-            leftBtn={{
-              title: "Stake",
-              onClick: onClickStake
-            }}
-            rightBtn={{
-              title: "Withdraw",
-              onClick: onClickWithdraw
-            }}
-            bottomBtn={{
-              title: "Claim",
-              onClick: onClickClaim
-            }}
-          />
-        </div>
       </div>
+      {openDetails && <FundDetails tokens={tokens} />}
+
+      <SigmaButton
+        className={`mt-[10px] main_bg overflow-hidden w-full sm:min-h-[30px] flex justify-center items-center rounded-md   `}
+        onClick={onClickDetail}
+      >
+        <img
+          className={`w-[20px] h-[20px] ${openDetails ? "rotate-180" : ""}`}
+          src={ArrowDownIcon}
+          alt="ArrowDown"
+        />
+      </SigmaButton>
     </div>
   );
 };
 
-export default SHOMESHStakingListRow;
+export default FundAListRow;
+
+const TokenDisplay = ({ tokens }) => {
+  return (
+    <div className="flex  relative items-center xlg:h-[50px] lg:h-[40px] h-[35px] ">
+      {tokens.map((token, index) => {
+        const { name, logo } = token;
+        return (
+          <div
+            className={`absolute h-full xlg:w-[50px] lg:w-[40px] w-[35px]`}
+            style={{
+              left: `${index * 25}px`,
+              zIndex: index + 1
+            }}
+          >
+            <img src={logo} alt="logo" className="w-full h-full" />
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+const Composition = ({ tokens }) => {
+  return (
+    <div className="w-full h-full flex items-center rounded-md overflow-hidden">
+      {tokens.map((token, index) => {
+        return (
+          <div
+            className={`w-[${token.share}%]   h-full flex justify-center items-center sm:text-[16px] text-[12px] `}
+            style={{ width: `${token.share}%`, height: "100%" }}
+          >
+            <div className="bg-[#EAF0F6] w-full h-full rounded m-[3px] flex justify-center items-center text-black font-light">{`${token.name} ${token.share}%`}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};

@@ -8,7 +8,6 @@ import {
   getAbbreviateNumberFormat
 } from "../../../utils/numberFormat";
 import { BN, isBNPositive } from "../../../utils/AKBN";
-import { STAGE_TWO_END_UNIX } from "../../../../pages/Lockdrop";
 
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";

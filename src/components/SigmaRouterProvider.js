@@ -8,7 +8,7 @@ import Layout from "./Layout";
 import Lockdrop from "../pages/Lockdrop";
 // import Mint from "../pages/Mint";
 import Convert from "../pages/Convert";
-import Farm from "../pages/Farm";
+import Fund from "../pages/Fund";
 // import Vote from "../pages/Vote";
 import Govern from "../pages/Govern";
 // import VoteConnector from "../context/Vote/VoteConnector";
@@ -25,7 +25,7 @@ const SigmaRouterProvider = (props) => {
       children: [
         {
           path: "/",
-          element: <Convert />
+          element: <Fund />
           // element: <Navigate to="mint" replace />
         },
         {
@@ -36,10 +36,10 @@ const SigmaRouterProvider = (props) => {
         //   path: "/mint",
         //   element: <Mint />
         // },
-        {
-          path: "/farm",
-          element: <Farm />
-        },
+        // {
+        //   path: "/fund",
+        //   element: <Fund />
+        // },
         // {
         //   path: "/vote/:voteContent",
         //   element: (

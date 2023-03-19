@@ -13,10 +13,10 @@ import { TOKENS } from "../../../../../web3/constants";
 import useERC20 from "../../../../../web3/hooks/ERC20/useERC20";
 import SigmaButton from "../../../../../components/Animation/SigmaButton";
 import MeshswapEscrowContract from "../../../../../web3/contracts/MeshswapEscrowContract";
-import useSMFFarm from "../../../../../web3/hooks/SHOMESHFarm/useSMFFarm";
-import SHOMESHFarm from "../../../../../web3/contracts/SHOMESHFarmContract/SHOMESHFarm";
+import useSMSStake from "../../../../../web3/hooks/SHOMESHStaking/useSMSStake";
+import SHOMESHStaking from "../../../../../web3/contracts/SHOMESHStakingContract/SHOMESHStaking";
 
-const SHOMESHFarmModal = ({ handleCancelPopup, onSuccessTransactions }) => {
+const SHOMESHStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
 
   const {
@@ -38,42 +38,48 @@ const SHOMESHFarmModal = ({ handleCancelPopup, onSuccessTransactions }) => {
   } = useERC20(MeshswapEscrowContract);
 
   const {
-    fetchFarmTxFee,
-    displayFarmTxFee,
-    isLoadingFarmTxFee,
-    setFarmTxFeeLoading,
+    fetchStakeTxFee,
+    displayStakeTxFee,
+    isLoadingStakeTxFee,
+    setStakeTxFeeLoading,
 
-    isLoadingFarmTx,
-    fetchFarmTx,
-    isValidFarmTx
-  } = useSMFFarm();
+    isLoadingStakeTx,
+    fetchStakeTx,
+    isValidStakeTx
+  } = useSMSStake();
 
-  const { inputComponent, maxComponent, weiValue, isValidTxInInput } =
-    useSigmaCurrencyInput({
-      name: TOKENS.shoMESH.name,
-      placeholder: `${TOKENS.shoMESH.name} to Farm`,
-      balance: SHOMESHBalance
-    });
+  const {
+    inputComponent,
+    maxComponent,
+    initInput,
+    bn: inputBN,
+    isValid: isValidInput,
+    weiValue,
+    stringValue,
+    isValidTxInInput
+  } = useSigmaCurrencyInput({
+    name: TOKENS.shoMESH.name,
+    placeholder: `${TOKENS.shoMESH.name} to Stake`,
+    balance: SHOMESHBalance
+  });
 
   /** LifeCycle */
   useSigmaDidMount(() => {
     fetchSHOMESHBalance(address);
-    fetchAllowance(address, SHOMESHFarm.address);
+    fetchAllowance(address, SHOMESHStaking.address);
   });
 
   /** Debounce */
   React.useEffect(() => {
     if (isWalletConnected && isValidTxInInput && isValidTxInERC20) {
-      if (!isLoadingFarmTxFee) {
-        setFarmTxFeeLoading();
-      }
+      if (!isLoadingStakeTxFee) setStakeTxFeeLoading();
       onDebounce(weiValue);
     }
   }, [isValidTxInInput, isValidTxInERC20, weiValue, isWalletConnected]);
 
   const onDebounce = React.useCallback(
     debounce((weiValue) => {
-      fetchFarmTxFee(weiValue);
+      fetchStakeTxFee(weiValue);
     }, 1000),
     [address]
   );
@@ -85,30 +91,30 @@ const SHOMESHFarmModal = ({ handleCancelPopup, onSuccessTransactions }) => {
       return;
     }
     if (!isValidApproveTransaction) return;
-    fetchApprove(SHOMESHFarm.address).then(() => {
-      fetchAllowance(address, SHOMESHFarm.address);
+    fetchApprove(SHOMESHStaking.address).then(() => {
+      fetchAllowance(address, SHOMESHStaking.address);
     });
   };
 
-  const onClickFarm = () => {
+  const onClickStake = () => {
     if (!isWalletConnected) {
       connectWallet();
       return;
     }
 
     if (!isValidTransaction) return;
-    fetchFarmTx(weiValue).then(() => {
-      handleCancelPopup("Farm");
+    fetchStakeTx(weiValue).then(() => {
+      handleCancelPopup("Stake");
       if (typeof onSuccessTransactions === "function")
-        onSuccessTransactions("Farm");
+        onSuccessTransactions("Stake");
     });
   };
 
   /** Validations */
 
   const isValidTransaction = React.useMemo(() => {
-    return isValidTxInInput && isValidTxInERC20 && isValidFarmTx;
-  }, [isValidTxInInput, isValidTxInERC20, isValidFarmTx]);
+    return isValidTxInInput && isValidTxInERC20 && isValidStakeTx;
+  }, [isValidTxInInput, isValidTxInERC20, isValidStakeTx]);
 
   /** UI */
 
@@ -137,10 +143,10 @@ const SHOMESHFarmModal = ({ handleCancelPopup, onSuccessTransactions }) => {
       {isApproved && (
         <UnitValueDisplay
           title="Tx Fee"
-          value={displayFarmTxFee}
+          value={displayStakeTxFee}
           unit={TOKENS.MATIC.name}
           className="mt-[5px]"
-          loading={isLoadingFarmTxFee}
+          loading={isLoadingStakeTxFee}
           error={false}
         />
       )}
@@ -151,7 +157,7 @@ const SHOMESHFarmModal = ({ handleCancelPopup, onSuccessTransactions }) => {
         <SigmaButton
           className="w-[46%] h-full flex justify-center items-center text-white border-[1px] border-[#ffffff50] sm:text-[18px] text-[14px] font-semibold  rounded-md AKBtnEffect"
           onClick={() => {
-            handleCancelPopup("Farm");
+            handleCancelPopup("Stake");
           }}
         >
           Cancel
@@ -161,10 +167,10 @@ const SHOMESHFarmModal = ({ handleCancelPopup, onSuccessTransactions }) => {
             className={`relative overflow-hidden w-[46%] 
           ${isValidTransaction ? "" : "opacity-50 cursor-not-allowed"}
             h-full flex justify-center items-center main_bg text-black sm:text-[18px] text-[14px] font-semibold rounded-md   `}
-            onClick={onClickFarm}
+            onClick={onClickStake}
           >
-            <p>Farm</p>
-            {isLoadingFarmTx && (
+            <p>Stake</p>
+            {isLoadingStakeTx && (
               <LoadingModal
                 className="absolute z-10 main_bg w-full h-full"
                 loadingClassName="sm:w-[26px] w-[23px] sm:h-[26px] h-[23px]"
@@ -194,4 +200,4 @@ const SHOMESHFarmModal = ({ handleCancelPopup, onSuccessTransactions }) => {
   );
 };
 
-export default SHOMESHFarmModal;
+export default SHOMESHStakeModal;

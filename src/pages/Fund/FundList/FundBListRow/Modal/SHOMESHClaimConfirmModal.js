@@ -6,9 +6,8 @@ import Connector from "../../../../../context/WalletConnector/Connector";
 import SigmaButton from "../../../../../components/Animation/SigmaButton";
 import { LoadingModal } from "../../../../../components/Loading";
 import useSMSConstants from "../../../../../web3/hooks/SHOMESHStaking/ReadOnly/useSMSConstants";
-import useSMFClaimReward from "../../../../../web3/hooks/SHOMESHFarm/useSMFClaimReward";
-import useSMFConstants from "../../../../../web3/hooks/SHOMESHFarm/ReadOnly/useSMFConstants";
-import { BN_FORMAT } from "../../../../../web3/utils/AKBN";
+import useSMSClaimReward from "../../../../../web3/hooks/SHOMESHStaking/useSMSClaimReward";
+
 const SHOMESHClaimConfirmModal = ({
   onSuccessTransactions,
   handleCancelPopup
@@ -16,21 +15,24 @@ const SHOMESHClaimConfirmModal = ({
   let { address, isWalletConnected } = Connector.useContainer();
 
   const {
-    basePendingBN,
-    isLoadingBasePending,
-    isPositiveBasePending,
-    numberedBasePending,
-    displayBasePending,
-    fetchBasePending,
+    isLoadingEarnedInfo,
 
-    boostPendingBN,
-    isLoadingBoostPending,
-    isValidBoostPending,
-    isPositiveBoostPending,
-    numberedBoostPending,
-    displayBoostPending,
-    fetchBoostPending
-  } = useSMFConstants(address);
+    shoEarnedBN,
+    isValidSHOEarned,
+    isPositiveSHOEarned,
+    displaySHOEarned,
+    displayNumberFormatSHOEarned,
+    displayLongSHOEarned,
+
+    shoMESHEarnedBN,
+    isValidSHOMESHEarned,
+    isPositiveSHOMESHEarned,
+    displaySHOMESHEarned,
+    displayNumberFormatSHOMESHEarned,
+    displayLongSHOMESHEarned,
+
+    fetchEarnedInfo
+  } = useSMSConstants(address);
 
   const {
     /** Tx Fee */
@@ -46,13 +48,14 @@ const SHOMESHClaimConfirmModal = ({
 
     /** Helpers */
     isValidClaimRewardTx
-  } = useSMFClaimReward();
+  } = useSMSClaimReward();
 
   useSigmaDidMount(() => {
-    fetchBasePending();
-    fetchBoostPending();
+    fetchEarnedInfo();
     fetchClaimRewardTxFee();
   });
+
+  /** Fetching */
 
   /** Event */
 
@@ -65,24 +68,19 @@ const SHOMESHClaimConfirmModal = ({
   };
 
   /** Validations */
-  const isValidClaimableAmount = React.useMemo(() => {
-    return isPositiveBasePending && isValidBoostPending;
-  }, [isPositiveBasePending, isValidBoostPending]);
 
   const isValidTransaction = React.useMemo(() => {
-    return isValidClaimableAmount && isValidClaimRewardTx && isWalletConnected;
-  }, [isValidClaimableAmount, isValidClaimRewardTx, isWalletConnected]);
-
-  /** UI */
-
-  const displayClaimableAmount = React.useMemo(() => {
-    if (!isValidClaimableAmount) return "-";
-    return `${basePendingBN.decimalPlaces(8).toFormat(BN_FORMAT)} ${
-      TOKENS.SHO.name
-    } + ${boostPendingBN.decimalPlaces(8).toFormat(BN_FORMAT)} ${
-      TOKENS.SHO.name
-    } (🔥 boosted)`;
-  }, [basePendingBN, isValidBoostPending, boostPendingBN]);
+    return (
+      (isPositiveSHOEarned || isPositiveSHOMESHEarned) &&
+      isValidClaimRewardTx &&
+      isWalletConnected
+    );
+  }, [
+    isPositiveSHOEarned,
+    isPositiveSHOMESHEarned,
+    isValidClaimRewardTx,
+    isWalletConnected
+  ]);
 
   return (
     <div className={` flex flex-col items-center relative w-full`}>
@@ -100,10 +98,18 @@ const SHOMESHClaimConfirmModal = ({
 
       <UnitValueDisplay
         title={`Claimable ${TOKENS.SHO.name}`}
-        value={displayClaimableAmount}
-        unit={""}
-        className=" text-white mt-[5px] "
-        loading={isLoadingBasePending || isLoadingBoostPending}
+        value={displayLongSHOEarned}
+        unit={TOKENS.SHO.name}
+        className=" text-white mt-[5px]"
+        loading={isLoadingEarnedInfo}
+        error={false}
+      />
+      <UnitValueDisplay
+        title={`Claimable ${TOKENS.shoMESH.name}`}
+        value={displayLongSHOMESHEarned}
+        unit={TOKENS.shoMESH.name}
+        className=" text-white mt-[5px]"
+        loading={isLoadingEarnedInfo}
         error={false}
       />
 

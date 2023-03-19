@@ -277,7 +277,7 @@ const LDDepositDashboard = ({
       <LockdropWithdrawOneNumberInput
         displayDeposit={displayDeposit}
         onSuccessTransactions={onSuccessTransactions}
-        isUnlimited={stageType === STAGE_TYPES.UNLIMITED.key}
+        isUnlimited={true}
       />
     )
   });
@@ -325,7 +325,7 @@ const LDDepositDashboard = ({
       </div>
       <div className=" min-h-[20px]" />
       {/* Deposit */}
-      {stageType === STAGE_TYPES.UNLIMITED.key && (
+      {true && (
         <div className="w-full flex flex-col items-center shogun_bg-secondary p-[30px]  rounded-md ">
           <UnitValueDisplay
             title="Balance"
@@ -448,7 +448,7 @@ const LockPeriod = ({
           const isFirstIndex = index === 0;
           return (
             <SigmaButton
-              className={`flex justify-center items-center w-[20%] hover:border-hidden hover:bg-[#18e7b7] border-[#ffffff50]  border-y-[1px]  ${
+              className={`flex justify-center items-center w-[20%] hover:border-hidden hover:bg-[#33ff99] border-[#ffffff50]  border-y-[1px]  ${
                 !isLastIndex && "border-r-[1px] "
               } ${isFirstIndex && "rounded-l-md border-l-[1px]"} ${
                 isLastIndex && "rounded-r-md border-r-[1px]"

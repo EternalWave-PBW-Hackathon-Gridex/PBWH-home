@@ -1,7 +1,11 @@
 const FarmListHeaderRow = ({ className }) => {
   return (
     <div className={`${className} w-full sm:flex hidden px-[30px]`}>
-      <div className="w-[22%]" />
+      <div className="w-[13%]" />
+      <div className=" w-[43%]">
+        {" "}
+        <FarmListHeaderItem title="Composition" />
+      </div>
       <div className="w-[9%] ">
         <FarmListHeaderItem title="TVL" />
       </div>
@@ -11,10 +15,9 @@ const FarmListHeaderRow = ({ className }) => {
       <div className="w-[13%]">
         <FarmListHeaderItem title="Your Deposits" />
       </div>
-      <div className=" w-[16%]">
+      <div className=" w-[13%]">
         <FarmListHeaderItem title="Your Earnings" />
       </div>
-      <div className=" w-[31%]" />
     </div>
   );
 };

@@ -5,12 +5,9 @@ import { URL } from "../../utils/constants";
 import { useSigmaAlert } from "../SigmaAlert";
 
 /** Icons */
-import LockdropIcon from "../../assets/images/navigator_lockdrop.png";
-import LockdropActiveIcon from "../../assets/images/navigator_lockdrop-active.png";
-import ConvertIcon from "../../assets/images/navigator_convert.png";
-import ConvertActiveIcon from "../../assets/images/navigator_convert-active.png";
-import MintIcon from "../../assets/images/navigator_mint.png";
-import MintActiveIcon from "../../assets/images/navigator_mint-active.png";
+import FundIcon from "../../assets/images/navigator_fund.png";
+import FundActiveIcon from "../../assets/images/navigator_fund-active.png";
+
 import FarmIcon from "../../assets/images/navigator_farm.png";
 import FarmActiveIcon from "../../assets/images/navigator_farm-active.png";
 import VoteIcon from "../../assets/images/navigator_vote.png";
@@ -25,37 +22,37 @@ import TelegramIcon from "../../assets/images/navigator_telegram.png";
 import DiscordIcon from "../../assets/images/navigator_discord.png";
 import GithubIcon from "../../assets/images/navigator_github.png";
 
-import SigmaLogo from "../../assets/images/global_logo-korea.png";
+import SigmaLogo from "../../assets/images/global_korea-grindex-text.png";
 import ClockIcon from "../../assets/images/global_clock.png";
 
 const LINK_MENUS = {
-  lockdrop: {
-    name: "Lockdrop",
-    to: "/lockdrop",
-    icon: LockdropIcon,
-    activeIcon: LockdropActiveIcon
-  },
+  // lockdrop: {
+  //   name: "Lockdrop",
+  //   to: "/lockdrop",
+  //   icon: LockdropIcon,
+  //   activeIcon: LockdropActiveIcon
+  // },
 
-  convert: {
-    name: "Convert",
+  // convert: {
+  //   name: "Convert",
+  //   to: "/",
+  //   icon: ConvertIcon,
+  //   activeIcon: ConvertActiveIcon
+  //   // disabled: true
+  // },
+  fund: {
+    name: "Fund",
     to: "/",
-    icon: ConvertIcon,
-    activeIcon: ConvertActiveIcon
-    // disabled: true
+    icon: FundIcon,
+    activeIcon: FundActiveIcon
   },
-  farm: {
-    name: "Farm",
-    to: "/farm",
-    icon: FarmIcon,
-    activeIcon: FarmActiveIcon
-  },
-  vote: {
-    name: "Vote",
-    to: "/vote/pool",
-    icon: VoteIcon,
-    activeIcon: VoteActiveIcon
-    // disabled: true
-  },
+  // vote: {
+  //   name: "Vote",
+  //   to: "/vote/pool",
+  //   icon: VoteIcon,
+  //   activeIcon: VoteActiveIcon
+  //   // disabled: true
+  // },
   govern: {
     name: "Govern",
     to: "/govern",

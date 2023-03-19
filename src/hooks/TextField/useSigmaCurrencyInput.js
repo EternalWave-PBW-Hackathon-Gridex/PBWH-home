@@ -15,6 +15,7 @@ export default function useSigmaCurrencyInput({
   balance
 }) {
   const [textValue, setTextValue] = React.useState("");
+  const [isEnable, setIsEnable] = React.useState(true);
 
   /** Component */
   const inputComponent = React.useMemo(() => {
@@ -36,6 +37,10 @@ export default function useSigmaCurrencyInput({
               setTextValue(values.value);
             }
           }}
+          isAllowed={() => {
+            if (!isEnable) return false;
+            return true;
+          }}
         />
       </div>
     );
@@ -48,7 +53,7 @@ export default function useSigmaCurrencyInput({
   const maxComponent = React.useMemo(() => {
     return (
       <div
-        className="sm:min-w-[60px] min-w-[50px] flex justify-center items-center cursor-pointer transition-all hover:opacity-70 sm:text-[18px] text-[14px] font-medium bg-white main_c"
+        className="sm:min-w-[60px] min-w-[50px] flex justify-center items-center cursor-pointer transition-all hover:opacity-70 sm:text-[18px] text-[14px] font-medium bg-white sub_c"
         onClick={onClickMax}
       >
         <SigmaButton>MAX</SigmaButton>
@@ -59,6 +64,10 @@ export default function useSigmaCurrencyInput({
   /** Actions */
   const initInput = () => {
     setTextValue("");
+  };
+
+  const setInput = (value) => {
+    setTextValue(value);
   };
 
   /** Converted Values */
@@ -105,6 +114,8 @@ export default function useSigmaCurrencyInput({
     inputComponent,
     maxComponent,
     initInput,
+    setInput,
+    setIsEnable,
     bn,
     isValid,
     textValue,

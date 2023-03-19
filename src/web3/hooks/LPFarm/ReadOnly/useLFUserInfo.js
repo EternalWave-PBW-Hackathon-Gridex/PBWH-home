@@ -3,7 +3,6 @@ import { ethers } from "ethers";
 import LPFarmContract from "../../../contracts/LPFarmContract";
 import { ContractCallState } from "../../../constants";
 import useConstantProperties from "../../useConstantProperties";
-import { STAGE_TWO_END_UNIX } from "../../../../pages/Lockdrop";
 import { BN } from "../../../utils/AKBN";
 
 import dayjs from "dayjs";
@@ -81,9 +80,7 @@ export default function useLFUserInfo(fromAddress) {
   const displayLockingPeriod = React.useMemo(() => {
     const isValid = !BN(lockingPeriod).isNaN();
     if (!isValid) return "-";
-    return dayjs
-      .unix(STAGE_TWO_END_UNIX + BN(lockingPeriod).toNumber())
-      .format("YY.MM.DD");
+    return dayjs.unix(0 + BN(lockingPeriod).toNumber()).format("YY.MM.DD");
   }, [isValidLockdropAmount, lockingPeriod]);
 
   const {

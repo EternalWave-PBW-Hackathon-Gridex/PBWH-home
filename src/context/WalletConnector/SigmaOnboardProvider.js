@@ -26,10 +26,10 @@ const SigmaOnboardProvider = ({ children }) => {
   const chains = [CHAINS[isProduction ? "ABITRUM" : "GOERLI"]];
 
   const appMetadata = {
-    name: "Eternal Wave",
+    name: "Grindex",
     icon: RESOURCES.ICON,
     logo: RESOURCES.BANNER,
-    description: "Eternal Wave is brandnew PBW Hackathon team",
+    description: "Grindex is brandnew indexfund protocol",
     gettingStartedGuide:
       "https://docs.sigmaprotocol.app/product/convert-ksp-into-sigksp",
     explore: "https://arbiscan.io/",

@@ -1,15 +1,15 @@
 import React from "react";
-import FarmList from "./FarmList";
+import FundList from "./FundList";
 
-const Farm = (props) => {
+const Fund = (props) => {
   return (
     <section className="w-full  flex justify-center">
       <div className="sm:mt-[60px] mt-[30px] w-[90%] ">
         {/* Farm List  */}
-        <FarmList />
+        <FundList />
       </div>
     </section>
   );
 };
 
-export default Farm;
+export default Fund;
