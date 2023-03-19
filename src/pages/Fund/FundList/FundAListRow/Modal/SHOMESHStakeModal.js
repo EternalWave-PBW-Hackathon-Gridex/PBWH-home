@@ -144,7 +144,7 @@ const SHOMESHStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
         <UnitValueDisplay
           title="Tx Fee"
           value={displayStakeTxFee}
-          unit={TOKENS.MATIC.name}
+          unit={TOKENS.ETH.name}
           className="mt-[5px]"
           loading={isLoadingStakeTxFee}
           error={false}

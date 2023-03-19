@@ -143,7 +143,7 @@ const XSHOUnpledgeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
       <UnitValueDisplay
         title="Tx Fee"
         value={displayUnstakeXSHOTxFee}
-        unit={TOKENS.MATIC.name}
+        unit={TOKENS.ETH.name}
         className="mt-[5px]"
         loading={isLoadingUnstakeXSHOTxFee}
         error={false}

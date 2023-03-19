@@ -100,7 +100,7 @@ const FundDeposit = ({ tokens }) => {
         <SigmaButton
           className={`relative overflow-hidden 
           ${"isValidDepositTransaction" ? "" : "opacity-50 cursor-not-allowed"}
-      w-full h-[60px] flex justify-center items-center main_bg text-black sm:text-[18px] text-[14px] font-semibold rounded-md   `}
+      w-full h-[40px] flex justify-center items-center main_bg text-black sm:text-[18px] text-[14px] font-semibold rounded-md   `}
           onClick={onClickDeposit}
         >
           <p>Deposit</p>

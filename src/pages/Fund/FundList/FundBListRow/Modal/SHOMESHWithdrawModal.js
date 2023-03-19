@@ -128,7 +128,7 @@ const SHOMESHWithdrawModal = ({ handleCancelPopup, onSuccessTransactions }) => {
       <UnitValueDisplay
         title="Tx Fee"
         value={displayWithdrawTxFee}
-        unit={TOKENS.MATIC.name}
+        unit={TOKENS.ETH.name}
         className="mt-[5px]"
         loading={isLoadingWithdrawTxFee}
         error={false}

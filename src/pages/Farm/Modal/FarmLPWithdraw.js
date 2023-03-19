@@ -219,7 +219,7 @@ const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
         <UnitValueDisplay
           title="Tx Fee"
           value={displayWithdrawLPTxFee}
-          unit={TOKENS.MATIC.name}
+          unit={TOKENS.ETH.name}
           className="mt-[5px] text-white"
           loading={isLoadingWithdrawLPTxFee}
           error={false}

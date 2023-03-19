@@ -159,7 +159,7 @@ const SHOUnStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
         <UnitValueDisplay
           title="Tx Fee"
           value={displayUnstakeSHOTxFee}
-          unit={TOKENS.MATIC.name}
+          unit={TOKENS.ETH.name}
           className="mt-[5px]"
           loading={isLoadingUnstakeSHOTxFee}
           error={false}

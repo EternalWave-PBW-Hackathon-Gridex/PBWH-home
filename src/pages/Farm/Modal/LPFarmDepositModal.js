@@ -1,16 +1,19 @@
 import React from "react";
 import { Stepper, Step, StepLabel, StepContent } from "@mui/material";
 import SigmaButton from "../../../components/Animation/SigmaButton";
-
-import FarmLPWithdraw from "./FarmLPWithdraw";
-import { MESHSWAP_LP_EXCHANGES } from "../../../web3/contracts/MSExchangeContract";
+import FarmLPDeposit from "./FarmLPDeposit";
 import { URL } from "../../../utils/constants";
-// import FarmRemoveLiquidity from "./FarmRemoveLiquidity";
+// import FarmLPDeposit from "./FarmLPDeposit";
+import SHOUSDCLPFarmAddLiquidity from "./SHOUSDCLPFarmAddLiquidity";
+import { MESHSWAP_LP_EXCHANGES } from "../../../web3/contracts/MSExchangeContract";
+import { TOKENS } from "../../../web3/constants";
 import OutLink from "../../../assets/images/global_icon_outlink.png";
+import { Link } from "react-router-dom";
 
-const LPFarmWithdrawModal = ({
-  onSuccessTransactions: onSuccessFarmTransactions,
+const LPFarmDepositModal = ({
+  onSuccessTransactions: onSuccessFarmListRowTransactions,
   farmItem,
+  LPTokenContract,
   handleCancelPopup
 }) => {
   const { tokenA, tokenB } = farmItem.lp;
@@ -27,45 +30,40 @@ const LPFarmWithdrawModal = ({
   /** Stepper */
   const steps = [
     {
-      label: `Unstake LP tokens from Shogun LP Farm`,
+      label: `Supply ${tokenA.token.name} & ${tokenB.token.name} to LP pool`,
+      subLabel: "(If you don't have LP tokens)",
       contentNode: (
-        <FarmLPWithdraw
-          onSuccessTransactions={onSuccessFarmTransactions}
-          farmItem={farmItem}
-          handleNext={handleNext}
-        />
+        <Link to="/">
+          <SigmaButton
+            className={` mt-[30px] main_bg text-black w-full sm:h-[50px] h-[40px] flex justify-center items-center  border-[1px] border-[#ffffff50]  rounded-md sm:text-[18px]  text-[16px] font-normal`}
+          >
+            <p>Provide ETH-GDX indexfund LP</p>{" "}
+            <div className=" sm:ml-[10px] ml-[3px] sm:w-[20px] sm:h-[20px] w-[16px] h-[16px]">
+              <img src={OutLink} alt="outlink" />
+            </div>
+          </SigmaButton>
+        </Link>
+        // <SHOUSDCLPFarmAddLiquidity
+        //   onSuccessTransactions={onSuccessFarmListRowTransactions}
+        //   farmItem={farmItem}
+        //   handleNext={handleNext}
+        // />
       )
     },
     {
-      label: `Withdraw ${tokenA.token.name} & ${tokenB.token.name} from LP pool`,
+      label: `Stake ${farmItem.token.name} tokens to Grindex LP Farm`,
       contentNode: (
-        <SigmaButton
-          className={`mt-[10px] main_bg text-white w-full sm:h-[50px] h-[40px] flex justify-center items-center  border-[1px] border-[#ffffff50]  rounded-md sm:text-[18px]  text-[16px] font-normal`}
-          onClick={() => {
-            window.open(
-              `${URL.DEX}/exchange/pool/detail/${
-                MESHSWAP_LP_EXCHANGES[farmItem.token.name]
-              }`
-            );
-          }}
-        >
-          <p>Withdraw LP on Meshswap</p>
-          <div className="sm:ml-[10px] ml-[3px] sm:w-[24px] sm:h-[24px] w-[20px] h-[20px]">
-            <img src={OutLink} alt="outlink" />
-          </div>
-        </SigmaButton>
-        // <FarmRemoveLiquidity
-        //   enqueueSnackbar={enqueueSnackbar}
-        //   sigmaST={sigmaST}
-        //   onSuccessTransactions={onSuccessFarmTransactions}
-        //   farmItem={farmItem}
-        // />
+        <FarmLPDeposit
+          onSuccessTransactions={onSuccessFarmListRowTransactions}
+          farmItem={farmItem}
+          LPTokenContract={LPTokenContract}
+        />
       )
     }
   ];
 
   return (
-    <div className={` flex flex-col items-center relative w-full`}>
+    <div className={` flex flex-col items-center relative `}>
       <Stepper
         activeStep={activeStep}
         orientation="vertical"
@@ -117,7 +115,7 @@ const LPFarmWithdrawModal = ({
         <SigmaButton
           className={`${
             activeStep === 1 ? "main_bg text-black" : "text-white"
-          } w-[49%] h-full flex justify-center items-center border-[1px] border-[#ffffff50]  rounded-md AKBtnEffect`}
+          } w-[49%] h-full flex justify-center items-center border-[1px] border-[#ffffff50]  rounded-md `}
           onClick={handleBack}
         >
           Prev
@@ -125,16 +123,16 @@ const LPFarmWithdrawModal = ({
         <SigmaButton
           className={`${
             activeStep === 0 ? "main_bg text-black" : "text-white"
-          } w-[49%] h-full flex justify-center items-center  border-[1px] border-[#ffffff50]  rounded-md AKBtnEffect`}
+          } w-[49%] h-full flex justify-center items-center  border-[1px] border-[#ffffff50]  rounded-md `}
           onClick={handleNext}
         >
           Next
         </SigmaButton>
       </div>
       <SigmaButton
-        className="w-full  flex justify-center items-center text-white border-[1px] border-[#ffffff50]  rounded-md AKBtnEffect sm:h-[50px] h-[40px] mt-[10px]"
+        className="w-full  flex justify-center items-center text-white border-[1px] border-[#ffffff50]  rounded-md  sm:h-[50px] h-[40px] mt-[10px]"
         onClick={() => {
-          handleCancelPopup("withdraw");
+          handleCancelPopup("deposit");
         }}
       >
         Cancel
@@ -143,4 +141,4 @@ const LPFarmWithdrawModal = ({
   );
 };
 
-export default LPFarmWithdrawModal;
+export default LPFarmDepositModal;

@@ -208,7 +208,7 @@ const FarmLPDeposit = ({
         <UnitValueDisplay
           title="Tx Fee"
           value={displayDepositLPTxFee}
-          unit={TOKENS.MATIC.name}
+          unit={TOKENS.ETH.name}
           className="mt-[5px] text-white"
           loading={isLoadingDepositLPTxFee}
           error={false}

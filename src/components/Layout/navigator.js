@@ -46,6 +46,12 @@ const LINK_MENUS = {
     icon: FundIcon,
     activeIcon: FundActiveIcon
   },
+  farm: {
+    name: "Farm",
+    to: "/farm",
+    icon: FarmIcon,
+    activeIcon: FarmActiveIcon
+  },
   // vote: {
   //   name: "Vote",
   //   to: "/vote/pool",
@@ -130,7 +136,7 @@ const Navigator = ({ className }) => {
               >
                 <img src={DocsIcon} alt="icon" width={10.67} height={13.33} />
                 <p className="lg:text-[14px] text-[12px] lg:ml-[10px] ml-[8px]">
-                  Shogun Docs
+                  Grindex Docs
                 </p>
               </a>
             </SigmaButton>

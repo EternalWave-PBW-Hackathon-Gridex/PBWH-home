@@ -138,7 +138,7 @@ export const ALERT_TYPE = {
 
   VOTE_SIGMAGOV_MINIMUMSIG: {
     icon: "info",
-    title: "Shogun Governance",
+    title: "Grindex Governance",
     text: `You must have at least 20000 ${TOKENS.SHO.name}.`
   }
 };

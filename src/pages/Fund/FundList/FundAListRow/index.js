@@ -269,6 +269,7 @@ const FundAListRow = () => {
       {openDetails && <FundDetails tokens={tokens} />}
 
       <SigmaButton
+        whileHover={{ scale: 1.03 }}
         className={`mt-[10px] main_bg overflow-hidden w-full sm:min-h-[30px] flex justify-center items-center rounded-md   `}
         onClick={onClickDetail}
       >

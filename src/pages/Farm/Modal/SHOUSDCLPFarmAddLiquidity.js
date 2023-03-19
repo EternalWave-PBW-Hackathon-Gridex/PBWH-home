@@ -325,7 +325,7 @@ const SHOUSDCLPFarmAddLiquidity = ({
         <UnitValueDisplay
           title="Tx Fee"
           value={"displayTxFee"}
-          unit={TOKENS.MATIC.name}
+          unit={TOKENS.ETH.name}
           className="mt-[5px] text-white"
           loading={false}
           error={false}

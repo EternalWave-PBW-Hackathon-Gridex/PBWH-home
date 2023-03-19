@@ -21,7 +21,7 @@ const LDDescription = ({ description, MOTION_VARIANTS }) => {
             target="_blank"
             rel="noreferrer"
           >
-            <SigmaButton className="font-bold sm:text-[14px] text-[13px]">{`Shogun Docs`}</SigmaButton>
+            <SigmaButton className="font-bold sm:text-[14px] text-[13px]">{`Grindex Docs`}</SigmaButton>
           </a>
         </div>
       </div>

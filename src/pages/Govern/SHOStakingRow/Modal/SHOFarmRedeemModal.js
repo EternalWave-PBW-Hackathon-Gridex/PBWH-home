@@ -100,7 +100,7 @@ const SHOFarmRedeemModal = ({ onSuccessTransactions, handleCancelPopup }) => {
       <UnitValueDisplay
         title="Tx Fee"
         value={displayClaimUnlockedSHOTxFee}
-        unit={TOKENS.MATIC.name}
+        unit={TOKENS.ETH.name}
         className="mt-[5px] text-white"
         loading={isLoadingClaimUnlockedSHOTxFee}
         error={false}

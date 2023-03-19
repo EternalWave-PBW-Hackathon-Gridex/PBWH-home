@@ -69,7 +69,7 @@ export const TOKENS = {
     logo: USDClogo
   },
 
-  //
+  // GRINDEX
   ETH: {
     name: "ETH",
     logo: MESHlogo
@@ -81,6 +81,18 @@ export const TOKENS = {
   BTC: {
     name: "BTC",
     logo: xSHOlogo
+  },
+  GRIN: {
+    name: "GRIN",
+    logo: SHOlogo
+  },
+  "ETH/GDX": {
+    name: "ETH/GDX",
+    logo: shoMESHMESHLogo
+  },
+  "BTC/ETH/GDX": {
+    name: "BTC/ETH/GDX",
+    logo: shoMESHMESHLogo
   }
 };
 

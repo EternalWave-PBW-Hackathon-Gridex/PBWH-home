@@ -11,13 +11,13 @@ export const URL = {
   LANDING: `https://${isProduction ? "www." : "dev."}shogunprotocol.com`,
   APP: `https://${isProduction ? "app." : "testnet."}shogunprotocol.com`,
   SCOPE: `https://${isProduction ? "" : "mumbai."}polygonscan.com`,
-  DOCS: `https://docs.shogunprotocol.com`,
+  DOCS: `https://www.gdx.org/`,
   DEX: "https://meshswap.fi",
 
-  TWITTER: "https://twitter.com/shogun_polygon",
-  MEDIUM: "https://medium.com/@shogun_polygon ",
-  TELEGRAM: "https://t.me/shogun_eng",
-  DISCORD: "https://discord.gg/mjJV3ju6Jj"
+  TWITTER: "https://www.gdx.org/",
+  MEDIUM: "https://www.gdx.org/",
+  TELEGRAM: "https://www.gdx.org/",
+  DISCORD: "https://www.gdx.org/"
 };
 
 export const API_TOKEN = {

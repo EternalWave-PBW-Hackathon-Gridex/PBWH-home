@@ -26,13 +26,6 @@ const FarmClaimConfirmModal = ({
   } = useLFYourEarnings({ farmItem });
 
   const {
-    isLoadingSHOMESHEarned,
-
-    displaySHOMESHEarned,
-    fetchSHOMESHEarned
-  } = useLFMHConstants(address);
-
-  const {
     /** Tx Fee */
     isCallSuccessClaimTxFee,
     isLoadingClaimTxFee,
@@ -47,7 +40,6 @@ const FarmClaimConfirmModal = ({
 
   useSigmaDidMount(() => {
     fetchClaimTxFee(poolId);
-    if (poolId === 1) fetchSHOMESHEarned(poolId);
   });
 
   /** Fetching */
@@ -71,7 +63,7 @@ const FarmClaimConfirmModal = ({
   /** Display */
   const displayClaimableAmount = React.useMemo(() => {
     if (!isValidYourEarnings) return "-";
-    return `${displayBasePending} ${TOKENS.SHO.name} + ${displayBoostPending} ${TOKENS.SHO.name} (🔥 boosted)`;
+    return `${displayBasePending} ${TOKENS.GRIN.name} + ${displayBoostPending} ${TOKENS.GRIN.name} (🔥 boosted)`;
   }, [isValidYourEarnings, displayBasePending, displayBoostPending]);
 
   return (
@@ -88,7 +80,7 @@ const FarmClaimConfirmModal = ({
         />
       )}
       <UnitValueDisplay
-        title={`Claimable ${TOKENS.SHO.name}`}
+        title={`Claimable ${TOKENS.GRIN.name}`}
         value={displayClaimableAmount}
         unit={""}
         className=" text-white mt-[5px] "
@@ -96,29 +88,10 @@ const FarmClaimConfirmModal = ({
         error={false}
       />
 
-      {poolId === 1 && (
-        <div className="flex items-center w-full">
-          <UnitValueDisplay
-            title={`Claimable ${TOKENS.shoMESH.name}`}
-            value={`${displaySHOMESHEarned}`}
-            unit={TOKENS.shoMESH.name}
-            className=" text-white mt-[5px] w-fit"
-            loading={isLoadingSHOMESHEarned}
-            error={false}
-          />
-          <AKTooltip
-            tooltipElement={
-              <p>{`Additional ${TOKENS.MESH.name} reward from Meshswap is converted to ${TOKENS.shoMESH.name} and distributed to users proportionally.`}</p>
-            }
-            iconClassName="w-[20px] h-[20px]"
-          />
-        </div>
-      )}
-
       <UnitValueDisplay
         title="Tx Fee"
         value={displayClaimTxFee}
-        unit={TOKENS.MATIC.name}
+        unit={TOKENS.ETH.name}
         className="mt-[5px] text-white"
         loading={isLoadingClaimTxFee}
         error={false}

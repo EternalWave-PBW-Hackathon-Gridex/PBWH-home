@@ -122,7 +122,7 @@ const SHOStakingRow = () => {
   } = useSigmaAlert({
     defaultInfo: {
       title: "Stake",
-      subTitle: `Stake ${TOKENS.SHO.name} to Shogun Protocol to earn rewards.\nThere is a 7 days unstaking period. `
+      subTitle: `Stake ${TOKENS.SHO.name} to Grindex to earn rewards.\nThere is a 7 days unstaking period. `
     },
     children: (
       <SHOStakeModal

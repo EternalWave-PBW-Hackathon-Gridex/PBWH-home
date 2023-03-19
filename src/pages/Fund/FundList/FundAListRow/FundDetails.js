@@ -59,7 +59,8 @@ const FundDetails = ({ tokens }) => {
               borderTopRightRadius: "6px"
             },
             "& .MuiTabs-indicator": {
-              display: "none"
+              backgroundColor: "#33ff99",
+              bottom: 0
             },
             "& .MuiTab-textColorPrimary": {
               color: "#ffffff",
@@ -70,8 +71,8 @@ const FundDetails = ({ tokens }) => {
             },
 
             "& .MuiTab-textColorPrimary.Mui-selected": {
-              color: "#000000",
-              backgroundColor: "#33ff99",
+              color: "#33ff99",
+              // backgroundColor: "#33ff99",
               fontWeight: 700
             }
           }}
