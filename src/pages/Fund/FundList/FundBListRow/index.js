@@ -221,7 +221,7 @@ const FundAListRow = () => {
             isWalletConnected={true}
             loading={isLoadingTVL}
             error={false}
-            valueNode={<p>{`${displayTVL} $`}</p>}
+            valueNode={<p>{`${"1.2M"} $`}</p>}
           />
         </div>
         <div className=" sm:w-[9%] w-full  flex sm:justify-center justify-between items-center xlg:text-[16px] lg:text-[14px] md:text-[13px] text-[12px] sm:mt-0 mt-[5px] ">
@@ -231,7 +231,7 @@ const FundAListRow = () => {
               isWalletConnected={true}
               loading={isLoadingAPR}
               error={false}
-              valueNode={<p> {`${displayARP.sum} %`}</p>}
+              valueNode={<p> {`${97} %`}</p>}
             />
           </div>
         </div>
@@ -242,9 +242,7 @@ const FundAListRow = () => {
             isWalletConnected={isWalletConnected}
             loading={isLoadingSHOMESHBalance}
             error={false}
-            valueNode={
-              <p className="">{`${displayNumberFormatSHOMESHBalance}`}</p>
-            }
+            valueNode={<p className="">{`${28}`}</p>}
           />
         </div>
         {/* Your Earning */}
@@ -254,16 +252,7 @@ const FundAListRow = () => {
             isWalletConnected={isWalletConnected}
             loading={isLoadingEarnedInfo}
             error={false}
-            valueNode={
-              <div>
-                {
-                  <div className="flex flex-col">
-                    <p className="">{`${displayNumberFormatSHOEarned} ${TOKENS.SHO.name}`}</p>
-                    <p className="">{`${displayNumberFormatSHOMESHEarned} ${TOKENS.shoMESH.name}`}</p>
-                  </div>
-                }
-              </div>
-            }
+            valueNode={<div></div>}
           />
         </div>
       </div>
@@ -316,7 +305,7 @@ const Composition = ({ tokens }) => {
             className={`w-[${token.share}%]   h-full flex justify-center items-center sm:text-[16px] text-[12px] `}
             style={{ width: `${token.share}%`, height: "100%" }}
           >
-            <div className="bg-[#EAF0F6] w-full h-full rounded m-[3px] flex justify-center items-center text-black font-light">{`${token.name} ${token.share}%`}</div>
+            <div className="border-[#33ff99] border-[1px] main_c w-full h-full rounded m-[3px] flex justify-center items-center text-black font-light">{`${token.name} ${token.share}%`}</div>
           </div>
         );
       })}

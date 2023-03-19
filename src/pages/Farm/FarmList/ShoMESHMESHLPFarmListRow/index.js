@@ -283,7 +283,7 @@ const ShoMESHMESHLPFarmListRow = ({
             isWalletConnected={true}
             loading={isLoadingTVL}
             error={false}
-            valueNode={<p>{`${displayTVL} $`}</p>}
+            valueNode={<p>{`${"25.4K"} $`}</p>}
           />
         </div>
 
@@ -294,7 +294,7 @@ const ShoMESHMESHLPFarmListRow = ({
               isWalletConnected={true}
               loading={isLoadingBasePoolAPR}
               error={false}
-              valueNode={<p> {`${displayBasePoolAPR} %`}</p>}
+              valueNode={<p> {`${243} %`}</p>}
             />
           </div>
         </div>
@@ -307,7 +307,7 @@ const ShoMESHMESHLPFarmListRow = ({
             valueNode={
               <div className="flex flex-col  sm:items-start items-end">
                 <div className="flex items-center justify-center">
-                  <p className="xlg:text-[16px] lg:text-[14px] md:text-[13px] text-[12px] ">{`${displayUserInfoAmount} `}</p>
+                  <p className="xlg:text-[16px] lg:text-[14px] md:text-[13px] text-[12px] ">{`${0.0005} `}</p>
                 </div>
               </div>
             }
@@ -320,7 +320,7 @@ const ShoMESHMESHLPFarmListRow = ({
             isWalletConnected={isWalletConnected}
             loading={isLoadingYourEarnings}
             error={false}
-            valueNode={<p>{`${displayYourEarning} ${TOKENS.GRIN.name}`}</p>}
+            valueNode={<p>{`${492} ${TOKENS.GRIN.name}`}</p>}
           />
         </div>
         <div className="flex justify-center items-center  sm:w-[31%] sm:max-w-[31%] w-full max-w-full sm:mt-0 mt-[10px]">

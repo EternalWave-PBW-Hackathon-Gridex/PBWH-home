@@ -37,7 +37,7 @@ const LPFarmDepositModal = ({
           <SigmaButton
             className={` mt-[30px] main_bg text-black w-full sm:h-[50px] h-[40px] flex justify-center items-center  border-[1px] border-[#ffffff50]  rounded-md sm:text-[18px]  text-[16px] font-normal`}
           >
-            <p>Provide ETH-GDX indexfund LP</p>{" "}
+            <p>Provide wETH-GDX indexfund LP</p>{" "}
             <div className=" sm:ml-[10px] ml-[3px] sm:w-[20px] sm:h-[20px] w-[16px] h-[16px]">
               <img src={OutLink} alt="outlink" />
             </div>

@@ -116,7 +116,7 @@ const FundWithdraw = () => {
         <UnitValueDisplay
           title="Balance"
           value={displayBalance}
-          unit={"ETH-GDX Index LP"}
+          unit={"wETH-GDX Index LP"}
           className="mb-[10px]"
           loading={isLoadingBalance}
           error={false}
@@ -126,9 +126,7 @@ const FundWithdraw = () => {
           {inputComponent}
           {maxComponent}
           <LPTokenDisplay
-            tokenInfo={{
-              name: "ETH-GDX"
-            }}
+            tokenInfo={TOKENS["wETH/GDX"]}
             className="sm:min-w-[33%] min-w-[28%] border-[#ffffff20] border-[1px] rounded-r-md"
           />
         </div>
