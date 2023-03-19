@@ -28,19 +28,22 @@ import {
 
 import useLFShoMESHMESHTVL from "../hooks/useLFShoMESHMESHTVL";
 import useLFSHOMESHMESHMiningHarvestAPR from "../hooks/useLFSHOMESHMESHMiningHarvestAPR";
+import BIIndexFundContract from "../../../../web3/contracts/BIIndexFundContract";
+import WETHTokenContract from "../../../../web3/contracts/WETHTokenContract";
+import GDXTokenContract from "../../../../web3/contracts/GDXTokenContract";
 
 const farmItem = {
   token: TOKENS["wETH/GDX"],
-  tokenContract: MSLPContract(MESHSWAP_LP_EXCHANGES["shoMESH/MESH"]),
+  tokenContract: BIIndexFundContract,
   lp: {
     poolId: 1,
     tokenA: {
-      token: TOKENS["ETH"],
-      contract: MeshswapEscrowContract
+      token: TOKENS["wETH"],
+      contract: WETHTokenContract
     },
     tokenB: {
       token: TOKENS["GDX"],
-      contract: MESHTokenContract
+      contract: GDXTokenContract
     },
     SHO_REWARD: 7000000
   }
@@ -137,6 +140,7 @@ const ShoMESHMESHLPFarmListRow = ({
         fetchTVL();
         break;
       case "withdrawLP":
+        closeFarmPopup();
         fetchUserInfo(poolId);
         fetchYourEarnings();
         break;

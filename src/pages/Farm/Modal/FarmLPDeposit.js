@@ -22,6 +22,8 @@ import LPFarm from "../../../web3/contracts/LPFarmContract/LPFarm";
 import { TOKENS } from "../../../web3/constants";
 import SigmaButton from "../../../components/Animation/SigmaButton";
 import useLFDepositLP from "../../../web3/hooks/LPFarm/useLFDepositLP";
+import useFFDepositLP from "../../../web3/hooks/FundFarm/useFFDepositLP";
+import FundFarmContract from "../../../web3/contracts/FundFarmContract";
 
 const FarmLPDeposit = ({
   onSuccessTransactions,
@@ -77,14 +79,17 @@ const FarmLPDeposit = ({
 
     /** Tx */
     isLoadingDepositLPTx,
-    fetchDepositLPTx
-  } = useLFDepositLP();
+    fetchDepositLPTx,
+
+    /** Helpers */
+    isValidDepositLPTx
+  } = useFFDepositLP();
 
   /** LifeCycle */
 
   useSigmaDidMount(() => {
     fetchLPTokenBalance(address);
-    fetchAllowance(address, LPFarm.address);
+    fetchAllowance(address, FundFarmContract.address);
   });
 
   /** Debounce */
@@ -108,7 +113,7 @@ const FarmLPDeposit = ({
 
   const onDebounce = React.useCallback(
     debounce((weiValue) => {
-      fetchDepositLPTxFee(poolId, weiValue);
+      fetchDepositLPTxFee(weiValue);
     }, 1000),
     [address]
   );
@@ -123,8 +128,8 @@ const FarmLPDeposit = ({
       return;
     }
     if (!isValidApproveTransaction) return;
-    fetchApprove(LPFarm.address).then(() => {
-      fetchAllowance(address, LPFarm.address);
+    fetchApprove(FundFarmContract.address).then(() => {
+      fetchAllowance(address, FundFarmContract.address);
     });
   };
 
@@ -135,7 +140,7 @@ const FarmLPDeposit = ({
     }
 
     if (!isValidDepositTransaction) return;
-    fetchDepositLPTx(poolId, weiValue).then(() => {
+    fetchDepositLPTx(weiValue).then(() => {
       if (typeof onSuccessTransactions === "function")
         onSuccessTransactions("depositLP");
     });
@@ -152,8 +157,7 @@ const FarmLPDeposit = ({
       isPositiveBalance &&
       isApproved &&
       isWalletConnected &&
-      isCallSuccessDepositLPTxFee &&
-      !isLoadingDepositLPTx
+      isValidDepositLPTx
     );
   }, [
     isInputPositive,
@@ -161,8 +165,7 @@ const FarmLPDeposit = ({
     isPositiveBalance,
     isApproved,
     isWalletConnected,
-    isCallSuccessDepositLPTxFee,
-    isLoadingDepositLPTx
+    isValidDepositLPTx
   ]);
 
   return (

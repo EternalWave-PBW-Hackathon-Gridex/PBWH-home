@@ -22,6 +22,9 @@ import { TOKENS } from "../../../web3/constants";
 import SigmaButton from "../../../components/Animation/SigmaButton";
 import useLFWithdrawLP from "../../../web3/hooks/LPFarm/useLFWithdrawLP";
 import useLPFarmConstants from "../../../web3/hooks/LPFarm/ReadOnly/useLPFarmConstants";
+import FundFarmContract from "../../../web3/contracts/FundFarmContract";
+import useFFConstants from "../../../web3/hooks/FundFarm/ReadOnly/useFFConstants";
+import useFFWithdrawLP from "../../../web3/hooks/FundFarm/useFFWithdrawLP";
 
 const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
   const isSHOMESHMESH = farmItem.token.name === "shoMESH/MESH";
@@ -30,6 +33,19 @@ const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
   const { token } = farmItem;
 
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
+
+  const {
+    lpBalance,
+    lpBalanceBN,
+    isLoadingLPBalance,
+    isCallSuccessLPBalance,
+    isValidLPBalance,
+    isPositiveLPBalance,
+    numberedLPBalance,
+
+    displayLPBalance,
+    fetchLPBalance
+  } = useFFConstants(address);
 
   const {
     userInfoAmount,
@@ -50,17 +66,17 @@ const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
     fetchUserInfo
   } = useLPFarmConstants(address);
 
-  const withdrawableAmount = React.useMemo(() => {
-    return userInfoAmountBN.minus(lockdropAmountBN);
-  }, [userInfoAmountBN, lockdropAmountBN]);
+  // const withdrawableAmount = React.useMemo(() => {
+  //   return userInfoAmountBN.minus(lockdropAmountBN);
+  // }, [userInfoAmountBN, lockdropAmountBN]);
 
-  const displayWithdrawableAmount = React.useMemo(() => {
-    if (!isPositiveUserInfoAmount) return "-";
-    return userInfoAmountBN
-      .minus(lockdropAmountBN)
-      .decimalPlaces(4)
-      .toFormat(BN_FORMAT);
-  }, [withdrawableAmount, isPositiveUserInfoAmount]);
+  // const displayWithdrawableAmount = React.useMemo(() => {
+  //   if (!isPositiveUserInfoAmount) return "-";
+  //   return userInfoAmountBN
+  //     .minus(lockdropAmountBN)
+  //     .decimalPlaces(4)
+  //     .toFormat(BN_FORMAT);
+  // }, [withdrawableAmount, isPositiveUserInfoAmount]);
 
   const {
     inputComponent,
@@ -72,7 +88,7 @@ const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
   } = useSigmaCurrencyInput({
     name: token.name,
     placeholder: `${token.name} to Withdraw`,
-    balance: isSHOMESHMESH ? withdrawableAmount.toString() : userInfoAmount
+    balance: lpBalance
   });
 
   const {
@@ -85,8 +101,11 @@ const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
 
     /** Tx */
     isLoadingWithdrawLPTx,
-    fetchWithdrawLPTx
-  } = useLFWithdrawLP();
+    fetchWithdrawLPTx,
+
+    /** Helpers */
+    isValidWithdrawLPTx
+  } = useFFWithdrawLP();
 
   const onSuccessLPWithdrawPopupTransactions = (type, _trxHash) => {
     switch (type) {
@@ -105,7 +124,7 @@ const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
   /** LifeCycle */
 
   useSigmaDidMount(() => {
-    fetchUserInfo(poolId);
+    fetchLPBalance();
   });
 
   /** Debounce */
@@ -118,7 +137,7 @@ const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
 
   const onDebounce = React.useCallback(
     debounce((weiValue) => {
-      fetchWithdrawLPTxFee(poolId, weiValue);
+      fetchWithdrawLPTxFee(weiValue);
     }, 1000),
     [address]
   );
@@ -134,7 +153,7 @@ const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
     }
 
     if (!isValidWithdrawTransaction) return;
-    fetchWithdrawLPTx(poolId, weiValue).then(() => {
+    fetchWithdrawLPTx(weiValue).then(() => {
       if (typeof onSuccessTransactions === "function")
         onSuccessTransactions("withdrawLP");
       handleNext();
@@ -149,18 +168,16 @@ const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
     return (
       isInputPositive &&
       !isBiggerThanBalance &&
-      isPositiveUserInfoAmount &&
+      isPositiveLPBalance &&
       isWalletConnected &&
-      isCallSuccessWithdrawLPTxFee &&
-      !isLoadingWithdrawLPTx
+      isValidWithdrawLPTx
     );
   }, [
     isInputPositive,
     isBiggerThanBalance,
-    isPositiveUserInfoAmount,
+    isPositiveLPBalance,
     isWalletConnected,
-    isCallSuccessWithdrawLPTxFee,
-    isLoadingWithdrawLPTx
+    isValidWithdrawLPTx
   ]);
 
   return (
@@ -177,31 +194,12 @@ const FarmLPWithdraw = ({ onSuccessTransactions, farmItem, handleNext }) => {
 
       <div className="w-full">
         <UnitValueDisplay
-          title={`Total Deposit`}
-          value={displayUserInfoAmount}
+          title={`Your Deposit`}
+          value={displayLPBalance}
           unit={farmItem.token.name}
           className=" text-white mt-[5px]"
-          loading={isLoadingUserInfo}
+          loading={isLoadingLPBalance}
         />
-        {farmItem.token.name === "shoMESH/MESH" && isPositiveLockdropAmount && (
-          <>
-            {" "}
-            <UnitValueDisplay
-              title={`Locked Deposit`}
-              value={displayLockdropAmount}
-              unit={`${farmItem.token.name} (until ${displayLockingPeriod})`}
-              className=" text-white mt-[5px]"
-              loading={isLoadingUserInfo}
-            />
-            <UnitValueDisplay
-              title={`Withdrawable Deposit`}
-              value={displayWithdrawableAmount}
-              unit={farmItem.token.name}
-              className=" text-white mt-[5px]"
-              loading={isLoadingUserInfo}
-            />
-          </>
-        )}
         <div className="min-h-[5px]" />
 
         <div className={` flex w-full  transition-all hover:scale-105`}>

@@ -22,7 +22,7 @@ export default function useNumericTokenConstants(numberValue, isCallSuccess) {
 
   const display = React.useMemo(() => {
     if (!isValid) return "-";
-    return bn.decimalPlaces(4).toFormat(BN_FORMAT);
+    return bn.decimalPlaces(8).toFormat(BN_FORMAT);
   }, [bn, isValid]);
 
   const displayNumberFormat = React.useMemo(
