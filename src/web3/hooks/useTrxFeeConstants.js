@@ -17,7 +17,7 @@ export default function useTrxFeeConstants(gasUnit, gasPrice, isCallSuccess) {
 
   const display = React.useMemo(() => {
     if (!isPositive) return "-";
-    return convertToETH(txFeeBN).decimalPlaces(4).toString();
+    return convertToETH(txFeeBN).decimalPlaces(6).toString();
   }, [isPositive, txFeeBN]);
 
   return {

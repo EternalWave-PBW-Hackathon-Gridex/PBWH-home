@@ -1,7 +1,7 @@
 import { isProduction } from "../../../utils/constants";
 export default {
   address: isProduction
-    ? "0x924a772a0AFa8D85B21057485168d56F8f817453"
+    ? "0x5AD53642A7Fe5FAE8EC02dBE6005325DD86dC0d2"
     : "0xD90fE3d7522f210A9e6d4B471B8c01CD9B3F8C61",
   abi: [
     {

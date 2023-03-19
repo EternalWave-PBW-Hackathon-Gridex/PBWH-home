@@ -30,7 +30,7 @@ import useLFShoMESHMESHTVL from "../hooks/useLFShoMESHMESHTVL";
 import useLFSHOMESHMESHMiningHarvestAPR from "../hooks/useLFSHOMESHMESHMiningHarvestAPR";
 
 const farmItem = {
-  token: TOKENS["ETH/GDX"],
+  token: TOKENS["wETH/GDX"],
   tokenContract: MSLPContract(MESHSWAP_LP_EXCHANGES["shoMESH/MESH"]),
   lp: {
     poolId: 1,

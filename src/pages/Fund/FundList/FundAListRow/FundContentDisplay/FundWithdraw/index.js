@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
+import { debounce } from "lodash";
 import SigmaButton from "../../../../../../components/Animation/SigmaButton";
 import { LoadingModal } from "../../../../../../components/Loading";
 import {
@@ -10,13 +11,37 @@ import Connector from "../../../../../../context/WalletConnector/Connector";
 import useSigmaCurrencyInput from "../../../../../../hooks/TextField/useSigmaCurrencyInput";
 import useSigmaDidMount from "../../../../../../hooks/useSigmaDidMount";
 import { TOKENS } from "../../../../../../web3/constants";
+import BIIndexFundContract from "../../../../../../web3/contracts/BIIndexFundContract";
 import useERC20 from "../../../../../../web3/hooks/ERC20/useERC20";
+import useBIWithdrawLP from "../../../../../../web3/hooks/BIIndexFund/useBIWithdrawLP";
+
 const FundWithdraw = () => {
   /** States */
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
 
-  const { balance, fetchBalance, displayBalance, isLoadingBalance } =
-    useERC20("LP Contract");
+  const {
+    balance,
+    fetchBalance,
+    displayBalance,
+    isLoadingBalance,
+    isPositiveBalance
+  } = useERC20(BIIndexFundContract);
+
+  const {
+    /** Tx Fee */
+    isCallSuccessWithdrawLPTxFee,
+    isLoadingWithdrawLPTxFee,
+    fetchWithdrawLPTxFee,
+    displayWithdrawLPTxFee,
+    setWithdrawLPTxFeeLoading,
+
+    /** Tx */
+    isLoadingWithdrawLPTx,
+    fetchWithdrawLPTx,
+
+    /** Helpers */
+    isValidWithdrawLPTx: isValidTx
+  } = useBIWithdrawLP();
 
   const {
     inputComponent,
@@ -30,7 +55,7 @@ const FundWithdraw = () => {
     stringValue
   } = useSigmaCurrencyInput({
     name: "Index LP",
-    placeholder: `ETH-GDX Index Fund LP to deposit`,
+    placeholder: `wETH-GDX Index Fund LP to deposit`,
     balance: balance
   });
 
@@ -38,18 +63,49 @@ const FundWithdraw = () => {
     fetchBalance(address);
   });
 
+  /** Debounce */
+  React.useEffect(() => {
+    if (isWalletConnected && weiValue) {
+      if (!isLoadingWithdrawLPTxFee) setWithdrawLPTxFeeLoading();
+      onDebounce(weiValue);
+    }
+  }, [weiValue, isWalletConnected]);
+
+  const onDebounce = React.useCallback(
+    debounce((weiValue) => {
+      fetchWithdrawLPTxFee(weiValue, 1, 1, address);
+    }, 1000),
+    [address]
+  );
+
   const onClickWithdraw = () => {
     if (!isWalletConnected) {
       connectWallet();
       return;
     }
-    // if (!isValidWithdrawTransaction) return;
-    // fetchWithdrawMESHTx(weiValue, lockMonth).then(() => {
-    //   fetchMESHBalance(address);
-    //   fetchWithdrawInfo(address);
-    //   fetchAllocatedSHO(address);
-    // });
+    if (!isValidWithdrawTransaction) return;
+    fetchWithdrawLPTx(weiValue, 1, 1, address).then(() => {
+      fetchBalance(address);
+    });
   };
+
+  const isValidWithdrawTransaction = React.useMemo(() => {
+    return (
+      isInputPositive &&
+      !isBiggerThanBalance &&
+      isPositiveBalance &&
+      isWalletConnected &&
+      isCallSuccessWithdrawLPTxFee &&
+      !isLoadingWithdrawLPTx
+    );
+  }, [
+    isInputPositive,
+    isBiggerThanBalance,
+    isPositiveBalance,
+    isWalletConnected,
+    isCallSuccessWithdrawLPTxFee,
+    isLoadingWithdrawLPTx
+  ]);
 
   return (
     <motion.div
@@ -81,21 +137,21 @@ const FundWithdraw = () => {
         <div className=" flex flex-col w-full my-[24px] ">
           <UnitValueDisplay
             title="Tx Fee"
-            value={"displayWithdrawMESHTxFee"}
+            value={displayWithdrawLPTxFee}
             unit={TOKENS.ETH.name}
             className="mt-[5px]"
-            loading={false}
+            loading={isLoadingWithdrawLPTxFee}
             error={false}
           />
         </div>
         <SigmaButton
           className={`relative overflow-hidden 
-      ${"isValidWithdrawTransaction" ? "" : "opacity-50 cursor-not-allowed"}
+      ${isValidWithdrawTransaction ? "" : "opacity-50 cursor-not-allowed"}
   w-full h-[40px] flex justify-center items-center main_bg text-black sm:text-[18px] text-[14px] font-semibold rounded-md   `}
           onClick={onClickWithdraw}
         >
           <p>Withdraw</p>
-          {"isLoadingWithdrawMESHTx" && (
+          {isLoadingWithdrawLPTx && (
             <LoadingModal
               className="absolute z-10 main_bg w-full h-full"
               loadingClassName="sm:w-[26px] w-[23px] sm:h-[26px] h-[23px]"

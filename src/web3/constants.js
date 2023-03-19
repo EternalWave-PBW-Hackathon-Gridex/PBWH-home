@@ -74,6 +74,10 @@ export const TOKENS = {
     name: "ETH",
     logo: MESHlogo
   },
+  wETH: {
+    name: "wETH",
+    logo: MESHlogo
+  },
   GDX: {
     name: "GDX",
     logo: SHOlogo
@@ -90,8 +94,8 @@ export const TOKENS = {
     name: "xGRIN",
     logo: xSHOlogo
   },
-  "ETH/GDX": {
-    name: "ETH/GDX",
+  "wETH/GDX": {
+    name: "wETH/GDX",
     logo: shoMESHMESHLogo
   },
   "BTC/ETH/GDX": {
@@ -107,3 +111,6 @@ export const AlchemyProvider = new ethers.providers.JsonRpcProvider(
 export const AlchemyMainnetProvider = new ethers.providers.JsonRpcProvider(
   CHAINS.ABITRUM.rpcUrl
 );
+
+export const wETHPrice = 1780;
+export const GDXPrice = 1.34;

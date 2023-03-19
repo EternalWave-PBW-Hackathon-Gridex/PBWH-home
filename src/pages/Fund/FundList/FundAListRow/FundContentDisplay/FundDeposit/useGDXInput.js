@@ -9,6 +9,7 @@ import {
 import SigmaButton from "../../../../../../components/Animation/SigmaButton";
 import useSigmaDidMount from "../../../../../../hooks/useSigmaDidMount";
 import { LoadingModal } from "../../../../../../components/Loading";
+import BIIndexFundContract from "../../../../../../web3/contracts/BIIndexFundContract";
 
 export default function useGDXInput({ token }) {
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
@@ -49,7 +50,7 @@ export default function useGDXInput({ token }) {
 
   useSigmaDidMount(() => {
     fetchBalance(address);
-    fetchAllowance(address, "FundDeposit Contract address");
+    fetchAllowance(address, BIIndexFundContract.address);
   });
 
   const onClickApprove = () => {
@@ -59,8 +60,8 @@ export default function useGDXInput({ token }) {
     }
 
     if (!isValidApproveTransaction) return;
-    fetchApprove("FundDeposit Contract address").then(() => {
-      fetchAllowance(address, "FundDeposit Contract address");
+    fetchApprove(BIIndexFundContract.address).then(() => {
+      fetchAllowance(address, BIIndexFundContract.address);
     });
   };
 
@@ -128,7 +129,11 @@ w-full sm:min-h-[40px] min-h-[32px] flex justify-center items-center main_bg tex
     isApproved,
     setInput,
     setIsEnable,
+    fetchBalance,
     stringValue,
-    weiValue
+    weiValue,
+    numberValue,
+    isInputPositive,
+    isBiggerThanBalance
   };
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { debounce } from "lodash";
 import SigmaButton from "../../../../../../components/Animation/SigmaButton";
 import { LoadingModal } from "../../../../../../components/Loading";
 import {
@@ -9,64 +10,130 @@ import {
 import Connector from "../../../../../../context/WalletConnector/Connector";
 import useSigmaCurrencyInput from "../../../../../../hooks/TextField/useSigmaCurrencyInput";
 import useSigmaDidMount from "../../../../../../hooks/useSigmaDidMount";
-import { TOKENS } from "../../../../../../web3/constants";
+import { GDXPrice, TOKENS, wETHPrice } from "../../../../../../web3/constants";
 import useERC20 from "../../../../../../web3/hooks/ERC20/useERC20";
 import useETHInput from "./useETHInput";
 import useGDXInput from "./useGDXInput";
 
 import SwapIcon from "../../../../../../assets/images/global_icon-swap.png";
+import useBIDepositLP from "../../../../../../web3/hooks/BIIndexFund/useBIDepositLP";
+import { BN, convertToWei } from "../../../../../../web3/utils/AKBN";
 
 const FundDeposit = ({ tokens }) => {
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
 
   const {
     component: ETHComponent,
+    isApproved: ETHIsApproved,
     setInput: setETHInput,
     setIsEnable: setIsETHEnable,
-    stringValue: ethStringValue
+    fetchBalance: fetchETHBalance,
+    stringValue: ethStringValue,
+    numberValue: ethNumberValue,
+    isInputPositive: isETHInputPositive,
+    isBiggerThanBalance: isETHBiggerThanBalance,
+    weiValue: ethWeiValue
   } = useETHInput({
     token: tokens[0]
   });
 
   const {
     component: GDXComponent,
+    isApproved: GDXIsApproved,
     setInput: setGDXInput,
     setIsEnable: setIsGDXEnable,
-    stringValue: gdxStringValue
+    fetchBalance: fetchGDXBalance,
+    stringValue: gdxStringValue,
+    numberValue: gdxNumberValue,
+    isInputPositive: isGDXInputPositive,
+    isBiggerThanBalance: isGDXBiggerThanBalance,
+    weiValue: gdxWeiValue
   } = useGDXInput({
     token: tokens[1]
   });
-  // const [isGDXEnable, setIsGDXEnable] = React.useState(true);
+
+  const {
+    /** Tx Fee */
+    isCallSuccessDepositLPTxFee,
+    isLoadingDepositLPTxFee,
+    fetchDepositLPTxFee,
+    displayDepositLPTxFee,
+    setDepositLPTxFeeLoading,
+
+    /** Tx */
+    isLoadingDepositLPTx,
+    fetchDepositLPTx,
+
+    /** Helpers */
+    isValidDepositLPTx
+  } = useBIDepositLP();
 
   useSigmaDidMount(() => {
-    setGDXInput(0);
-    setETHInput(0);
+    // setGDXInput(0);
+    // setETHInput(0);
   }, []);
+
+  useSigmaDidMount(() => {
+    setGDXInput((ethNumberValue * (wETHPrice * 4)) / GDXPrice);
+  }, [ethNumberValue]);
+
+  /** Debounce */
+  React.useEffect(() => {
+    if (isWalletConnected && gdxWeiValue && ethWeiValue) {
+      if (!isLoadingDepositLPTxFee) setDepositLPTxFeeLoading();
+      onDebounce(ethWeiValue, gdxWeiValue);
+    }
+  }, [gdxWeiValue, ethWeiValue, isWalletConnected]);
+
+  const onDebounce = React.useCallback(
+    debounce((ethWeiValue, gdxWeiValue) => {
+      fetchDepositLPTxFee(ethWeiValue, gdxWeiValue, 1, 1, address);
+    }, 1000),
+    [address]
+  );
 
   const onClickDeposit = () => {
     if (!isWalletConnected) {
       connectWallet();
       return;
     }
-    // if (!isValidDepositTransaction) return;
-    // fetchDepositMESHTx(weiValue, lockMonth).then(() => {
-    //   fetchMESHBalance(address);
-    //   fetchDepositInfo(address);
-    //   fetchAllocatedSHO(address);
-    // });
+    if (!isValidDepositTransaction) return;
+    fetchDepositLPTx(ethWeiValue, gdxWeiValue, 1, 1, address).then(() => {
+      fetchETHBalance(address);
+      fetchGDXBalance(address);
+    });
   };
 
-  React.useEffect(() => {
-    setIsETHEnable(false);
-    setGDXInput(ethStringValue);
-    setIsGDXEnable(true);
-  }, [ethStringValue]);
+  // useSigmaDidMount(() => {
+  //   setIsETHEnable(true);
+  //   setIsGDXEnable(false);
+  //   setETHInput(gdxNumberValue * GDXPrice * (wETHPrice * 4));
+  // }, [gdxNumberValue]);
 
-  React.useEffect(() => {
-    setIsGDXEnable(false);
-    setETHInput(gdxStringValue);
-    setIsETHEnable(true);
-  }, [gdxStringValue]);
+  /** Validations */
+  const isValidDepositTransaction = React.useMemo(() => {
+    return (
+      isETHInputPositive &&
+      !isETHBiggerThanBalance &&
+      isGDXInputPositive &&
+      !isETHBiggerThanBalance &&
+      ETHIsApproved &&
+      GDXIsApproved &&
+      isWalletConnected &&
+      isCallSuccessDepositLPTxFee &&
+      !isLoadingDepositLPTx
+    );
+  }, [
+    isETHInputPositive,
+    isETHBiggerThanBalance,
+    isGDXInputPositive,
+    isETHBiggerThanBalance,
+    ETHIsApproved,
+    GDXIsApproved,
+    isWalletConnected,
+    isCallSuccessDepositLPTxFee,
+    isLoadingDepositLPTx
+  ]);
 
   return (
     <motion.div
@@ -81,30 +148,22 @@ const FundDeposit = ({ tokens }) => {
       <div className="w-full flex flex-col items-center shogun_bg-secondary  rounded-md ">
         <div className=" flex flex-col w-full my-[24px] ">
           <UnitValueDisplay
-            title="expected LP"
-            value={"displayLockingAmount"}
-            unit={`BTC_ETH_USDC_LP`}
-            loading={false}
-            error={null}
-          />
-
-          <UnitValueDisplay
             title="Tx Fee"
-            value={"displayDepositMESHTxFee"}
+            value={displayDepositLPTxFee}
             unit={TOKENS.ETH.name}
             className="mt-[5px]"
-            loading={false}
+            loading={isLoadingDepositLPTxFee}
             error={false}
           />
         </div>
         <SigmaButton
           className={`relative overflow-hidden 
-          ${"isValidDepositTransaction" ? "" : "opacity-50 cursor-not-allowed"}
+          ${isValidDepositTransaction ? "" : "opacity-50 cursor-not-allowed"}
       w-full h-[40px] flex justify-center items-center main_bg text-black sm:text-[18px] text-[14px] font-semibold rounded-md   `}
           onClick={onClickDeposit}
         >
           <p>Deposit</p>
-          {"isLoadingDepositMESHTx" && (
+          {isLoadingDepositLPTx && (
             <LoadingModal
               className="absolute z-10 main_bg w-full h-full"
               loadingClassName="sm:w-[26px] w-[23px] sm:h-[26px] h-[23px]"

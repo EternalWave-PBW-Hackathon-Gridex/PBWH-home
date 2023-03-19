@@ -17,6 +17,22 @@ export default function useSigmaCurrencyInput({
   const [textValue, setTextValue] = React.useState("");
   const [isEnable, setIsEnable] = React.useState(true);
 
+  /** Converted Values */
+  const bn = React.useMemo(() => BN(textValue), [textValue]);
+  const isNaN = React.useMemo(() => bn.isNaN(), [bn]);
+
+  const isValid = React.useMemo(() => !isNaN, [isNaN]);
+
+  const stringValue = React.useMemo(() => {
+    if (!isValid) return 0;
+    return bn.toString();
+  }, [isValid, bn]);
+
+  const numberValue = React.useMemo(() => {
+    if (!isValid) return 0;
+    return bn.toNumber();
+  }, [isValid, bn]);
+
   /** Component */
   const inputComponent = React.useMemo(() => {
     return (
@@ -69,22 +85,6 @@ export default function useSigmaCurrencyInput({
   const setInput = (value) => {
     setTextValue(value);
   };
-
-  /** Converted Values */
-  const bn = React.useMemo(() => BN(textValue), [textValue]);
-  const isNaN = React.useMemo(() => bn.isNaN(), [bn]);
-
-  const isValid = React.useMemo(() => !isNaN, [isNaN]);
-
-  const stringValue = React.useMemo(() => {
-    if (!isValid) return 0;
-    return bn.toString();
-  }, [isValid, bn]);
-
-  const numberValue = React.useMemo(() => {
-    if (!isValid) return 0;
-    return bn.toNumber();
-  }, [isValid, bn]);
 
   const isPositive = React.useMemo(() => {
     return isValid && isBNPositive(bn);

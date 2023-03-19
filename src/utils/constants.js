@@ -1,5 +1,5 @@
-export const isProduction = process.env.REACT_APP_IS_PRODUCTION === "TRUE";
-// export const isProduction = true;
+// export const isProduction = process.env.REACT_APP_IS_PRODUCTION === "TRUE";
+export const isProduction = true;
 console.log(`${isProduction ? "production" : "development"} `);
 
 export const PROJECT_ID = "shogun";
@@ -10,7 +10,7 @@ export const URL = {
     : "http://127.0.0.1:1337",
   LANDING: `https://${isProduction ? "www." : "dev."}shogunprotocol.com`,
   APP: `https://${isProduction ? "app." : "testnet."}shogunprotocol.com`,
-  SCOPE: `https://${isProduction ? "" : "mumbai."}polygonscan.com`,
+  SCOPE: `https://${isProduction ? "" : "goerli."}arbiscan.io`,
   DOCS: `https://www.gdx.org/`,
   DEX: "https://meshswap.fi",
 

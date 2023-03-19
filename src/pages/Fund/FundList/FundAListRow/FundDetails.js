@@ -3,6 +3,7 @@ import useSigmaDidMount from "../../../../hooks/useSigmaDidMount";
 import Connector from "../../../../context/WalletConnector/Connector";
 import { Tabs, Tab } from "@mui/material";
 import FundContentDisplay from "./FundContentDisplay";
+import useERC20Balance from "../../../../web3/hooks/ERC20/useERC20Balance";
 
 const FundDetails = ({ tokens }) => {
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();

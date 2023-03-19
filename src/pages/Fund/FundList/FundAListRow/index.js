@@ -19,20 +19,48 @@ import SHOMESHWithdrawModal from "./Modal/SHOMESHWithdrawModal";
 import SHOMESHClaimConfirmModal from "./Modal/SHOMESHClaimConfirmModal";
 import useHarvest from "../../../../hooks/Strapi/useHarvest";
 import FundDetails from "./FundDetails";
-import SHOTokenContract from "../../../../web3/contracts/SHOTokenContract";
-import MESHTokenContract from "../../../../web3/contracts/MESHTokenContract";
 
 import ArrowDownIcon from "../../../../assets/images/global_icon_arrow-down.png";
 import SigmaButton from "../../../../components/Animation/SigmaButton";
+import WETHTokenContract from "../../../../web3/contracts/WETHTokenContract";
+import GDXTokenContract from "../../../../web3/contracts/GDXTokenContract";
+import useBIConstants from "../../../../web3/hooks/BIIndexFund/ReadOnly/useBIConstants";
 
 const tokens = [
-  { ...TOKENS["ETH"], share: 20, contract: SHOTokenContract },
-  { ...TOKENS["GDX"], share: 80, contract: MESHTokenContract }
+  { ...TOKENS["wETH"], share: 20, contract: WETHTokenContract },
+  { ...TOKENS["GDX"], share: 80, contract: GDXTokenContract }
 ];
 
 const FundAListRow = () => {
   const [openDetails, setOpenDetails] = React.useState(true);
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
+
+  const {
+    ethBalance,
+    ethBalanceBN,
+    isLoadingETHBalance,
+    isCallSuccessETHBalance,
+    isValidETHBalance,
+    isPositiveETHBalance,
+    numberedETHBalance,
+
+    displayETHBalance,
+    fetchETHBalance,
+
+    gdxBalance,
+    gdxBalanceBN,
+    isLoadingGDXBalance,
+    isCallSuccessGDXBalance,
+    isValidGDXBalance,
+    isPositiveGDXBalance,
+    numberedGDXBalance,
+
+    displayGDXBalance,
+    fetchGDXBalance
+  } = useBIConstants(address);
+
+  const tvl = React.useMemo(() => {}, []);
+
   const {
     isLoadingSHOMESHPrice,
     shoMESHPriceBN,
@@ -247,7 +275,7 @@ const FundAListRow = () => {
           />
         </div>
         {/* Your Earning */}
-        <div className="sm:w-[13%] w-full flex  sm:justify-center justify-between items-center whitespace-pre-wrap xlg:text-[16px] lg:text-[14px] md:text-[13px] text-[12px] sm:mt-0 mt-[5px]">
+        {/* <div className="sm:w-[13%] w-full flex  sm:justify-center justify-between items-center whitespace-pre-wrap xlg:text-[16px] lg:text-[14px] md:text-[13px] text-[12px] sm:mt-0 mt-[5px]">
           <div className="sm:hidden flex opacity-50 ">Your Earnings</div>
           <FarmListRowValue
             isWalletConnected={isWalletConnected}
@@ -264,7 +292,7 @@ const FundAListRow = () => {
               </div>
             }
           />
-        </div>
+        </div> */}
       </div>
       {openDetails && <FundDetails tokens={tokens} />}
 
