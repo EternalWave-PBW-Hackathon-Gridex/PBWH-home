@@ -1,5 +1,5 @@
 import React from "react";
-import SHOFarmContract from "../../contracts/SHOFarmContract";
+import GRINFarmContract from "../../contracts/GRINFarmContract";
 import Connector from "../../../context/WalletConnector/Connector";
 import useTransaction from "../useTransaction";
 import useTrxFeeConstants from "../useTrxFeeConstants";
@@ -17,10 +17,10 @@ export default function useSFUnstakeSHO() {
 
   const fetchTrxFee = async (...args) => {
     try {
-      const gasUnit = SHOFarmContract.estimateGas[methodName](...args, {
+      const gasUnit = GRINFarmContract.estimateGas[methodName](...args, {
         from: address
       });
-      const gasPrice = SHOFarmContract.provider
+      const gasPrice = GRINFarmContract.provider
         .getGasPrice()
         .then((res) => res.toNumber());
 
@@ -56,7 +56,7 @@ export default function useSFUnstakeSHO() {
     txReceipt,
     isLoading: isLoadingTx,
     fetchTransaction
-  } = useTransaction(SHOFarmContract, methodName);
+  } = useTransaction(GRINFarmContract, methodName);
 
   /** Helpers */
   const isValidTx = React.useMemo(() => {

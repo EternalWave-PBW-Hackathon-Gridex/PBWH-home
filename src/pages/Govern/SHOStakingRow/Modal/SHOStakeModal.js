@@ -15,6 +15,8 @@ import SHOFarm from "../../../../web3/contracts/SHOFarmContract/SHOFarm";
 import { TOKENS } from "../../../../web3/constants";
 import useERC20 from "../../../../web3/hooks/ERC20/useERC20";
 import SigmaButton from "../../../../components/Animation/SigmaButton";
+import GRINFarm from "../../../../web3/contracts/GRINFarmContract/GRINFarm";
+import GRINTokenContract from "../../../../web3/contracts/GRINTokenContract";
 
 const SHOStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
   let { address, isWalletConnected, connectWallet } = Connector.useContainer();
@@ -34,7 +36,7 @@ const SHOStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
     isValidApproveTransaction,
     isLoadingApproveButton,
     isValidTxInERC20
-  } = useERC20(SHOTokenContract);
+  } = useERC20(GRINTokenContract);
 
   const {
     isLoadingStakeSHOTxFee,
@@ -56,15 +58,15 @@ const SHOStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
     weiValue,
     isValidTxInInput
   } = useSigmaCurrencyInput({
-    name: TOKENS.SHO.name,
-    placeholder: `${TOKENS.SHO.name} to Stake`,
+    name: TOKENS.GRIN.name,
+    placeholder: `${TOKENS.GRIN.name} to Stake`,
     balance: SHOBalance
   });
 
   /** LifeCycle */
   useSigmaDidMount(() => {
     fetchSHOBalance(address);
-    fetchAllowance(address, SHOFarm.address);
+    fetchAllowance(address, GRINFarm.address);
   });
 
   /** Debounce */
@@ -89,8 +91,8 @@ const SHOStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
       return;
     }
     if (!isValidApproveTransaction) return;
-    fetchApprove(SHOFarm.address).then(() => {
-      fetchAllowance(address, SHOFarm.address);
+    fetchApprove(GRINFarm.address).then(() => {
+      fetchAllowance(address, GRINFarm.address);
     });
   };
 
@@ -121,7 +123,7 @@ const SHOStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
       <UnitValueDisplay
         title="Balance"
         value={displaySHOBalance}
-        unit={TOKENS.SHO.name}
+        unit={TOKENS.GRIN.name}
         className="mb-[10px]"
         loading={isLoadingSHOBalance}
       />
@@ -134,7 +136,7 @@ const SHOStakeModal = ({ handleCancelPopup, onSuccessTransactions }) => {
         {maxComponent}
 
         <LPTokenDisplay
-          tokenInfo={TOKENS.SHO}
+          tokenInfo={TOKENS.GRIN}
           className="sm:min-w-[33%] min-w-[28%] border-[#ffffff20] border-[1px] rounded-r-md"
         />
       </div>
